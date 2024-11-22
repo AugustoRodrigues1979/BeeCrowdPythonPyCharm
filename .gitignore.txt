@@ -1,4 +1,0 @@
-# Ignore Python virtual environment folders
-.venv/
-*.pyc
-__pycache__/
