@@ -5,24 +5,6 @@ import io
 import tracemalloc
 import time
 
-banknotes_default = [
-    {'value':100    , 'amount':0},
-    {'value':50     , 'amount':0},
-    {'value':20     , 'amount':0},
-    {'value':10     , 'amount':0},
-    {'value':5      , 'amount':0},
-    {'value':2      , 'amount':0},
-]
-
-bankcoins_default = [
-    {'value':1      , 'amount':0},
-    {'value':0.50   , 'amount':0},
-    {'value':0.25   , 'amount':0},
-    {'value':0.10   , 'amount':0},
-    {'value':0.05   , 'amount':0},
-    {'value':0.01   , 'amount':0},
-]
-
 def show_assert_failure_reason(expected_string, actual_string):
     print('\n') #Skip one line
     print('Expected String:','\n',expected_string) #Print Expected String
