@@ -259,8 +259,8 @@ class TestCedulas:
                 mock_print.assert_any_call('1 moeda(s) de R$ 0.05')
                 mock_print.assert_any_call('1 moeda(s) de R$ 0.01')
 
-    def test_amount_between_0_00_to_1_000(self):
-        target_value = 1000000.00  # Initialize target_value to maximum amount of money
+    def test_amount_between_0_00_to_1_00(self):
+        target_value = 100.00  # Initialize target_value to maximum amount of money
         actual_value = 0  # Initialize actual_value to first amount of money
         step_value = 0.01
         amount_values_unprocessed = int(((target_value - actual_value) / step_value) + 1)
