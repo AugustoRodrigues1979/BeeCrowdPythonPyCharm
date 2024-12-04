@@ -113,3 +113,24 @@ def test_run_challenge_show_correct_output_when_provided_common_consumption_betw
             actual_output += mock_print.call_args.args[0]
 
     assert actual_output == expected_output
+
+def test_run_challenge_show_correct_output_when_provided_example_from_judge_beecrowd():
+    mock_inputs = iter([
+        "3", "3 22", "2 11", "3 39",
+        "5", "1 25", "2 20", "3 31", "2 40", "6 70",
+        "2", "1 1", "3 2",
+        "0"
+    ])
+
+    expected_output = ''
+    expected_output += "Cidade# 1:\n2-5 3-7 3-13\nConsumo medio: 9.00 m3.\n"
+    expected_output += "Cidade# 2:\n5-10 6-11 2-20 1-25\nConsumo medio: 13.28 m3.\n"
+    expected_output += "Cidade# 3:\n3-0 1-1\nConsumo medio: 0.75 m3."
+
+    actual_output = ''
+    with patch('builtins.print') as mock_print:  # Mock print function
+        with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
+            run_challenge()  # Run Challenge
+            actual_output += mock_print.call_args.args[0]
+
+    assert actual_output == expected_output
