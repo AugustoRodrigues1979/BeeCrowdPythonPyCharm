@@ -22,34 +22,6 @@
 # No fim da saída não deve haver uma linha em branco.
 #
 import math
-import bisect
-
-
-def get_info_each_house(house_list):
-    output_str = ''
-    for house_index in range(len(house_list)):
-        house_dict = house_list[house_index]
-        output_str += f"{house_dict['K_AMOUNT_RESIDENTS']}-{house_dict['K_AMOUNT_CONSUME_PERSON']} "  # Build string
-
-    return output_str
-
-
-def get_all_amount_person(house_list):
-    total_persons = 0
-    for house_index in range(len(house_list)):
-        house_dict = house_list[house_index]
-        total_persons += int(house_dict['K_AMOUNT_RESIDENTS'])
-
-    return total_persons
-
-
-def get_all_amount_consume(house_list):
-    total_amount_consume = 0
-    for house_index in range(len(house_list)):
-        house_dict = house_list[house_index]
-        total_amount_consume += int(house_dict['K_AMOUNT_CONSUME_FAMILY'])
-
-    return total_amount_consume
 
 
 def round_down(number, decimal_places):
@@ -57,35 +29,18 @@ def round_down(number, decimal_places):
     return math.floor(number * factor) / factor
 
 
-def show_info_city(id_city, city_dict, sorted_integer_key_list):
-    output_first_line = f'Cidade# {id_city}:'  # Build first line info about the specify city
-    amount_person_by_city = 0  # Initialize amount of person for zero
-    amount_consume_by_city = 0  # Initialize amount of person for zero
-
-    output_second_line = ''  # Initialize second line info about the specify city
-    for consume_key in sorted_integer_key_list:  # For each consume key in sorted_key_list
-        house_list = city_dict[str(consume_key)]
-        output_second_line += get_info_each_house(house_list)
-        amount_person_by_city += get_all_amount_person(house_list)
-        amount_consume_by_city += get_all_amount_consume(house_list)
-
-    output_second_line = output_second_line.rstrip(' ')
-    average_consume_by_city = amount_consume_by_city / amount_person_by_city  # Get average consume by city
-    average_consume_by_city = round_down(average_consume_by_city, 2)
-    output_third_line = f'Consumo medio: {average_consume_by_city:.02f} m3.'  # Build third line for show for user
-    return output_first_line + '\n' + output_second_line + '\n' + output_third_line  # Return all info about specify city
-
-
 def collect_info_house():
+
     amount_residents_and_consume_by_family = input()  # Get amount of residents within the family
-    if amount_residents_and_consume_by_family == '':  # Check if amount is equal a empty string
+    if amount_residents_and_consume_by_family == '':  # Check if amount is equal an empty string
         raise ValueError('Provide a valid amount residents and amount of consume')  # Raise an exception
 
     amount_tokens = amount_residents_and_consume_by_family.split()  # Get amount residents and amount consume by house
     if len(amount_tokens) != 2:  # Check if amount of tokens is equal to 2
         raise ValueError('Provide ONE valid amount residents AND ONE amount of consume')  # Raise an exception
 
-    amount_residents, amount_consumed_family = [int(amount) for amount in amount_tokens]  # Convert each amount string in integer amount
+    amount_residents, amount_consumed_family = list(map(int,amount_tokens))
+
     if amount_residents <= 0:  # Check if amount of residents is less than or equal to zero
         raise ValueError('Number of residents cannot be equal to or less than zero')  # Raise an exception
 
@@ -93,41 +48,26 @@ def collect_info_house():
         raise ValueError('Amount consumed by family cannot be equal to or less than zero')  # Raise an exception
 
     average_consume_by_person = amount_consumed_family // amount_residents  # Get average consume by person
-    info_house_dict = {
-        'K_AMOUNT_RESIDENTS': amount_residents,
-        'K_AMOUNT_CONSUME_FAMILY': amount_consumed_family,
-        'K_AMOUNT_CONSUME_PERSON': average_consume_by_person
-    }  # Create a dict with info about all residents in specify house
-    return average_consume_by_person, info_house_dict  # Return average consume by person and info about a house
+    return average_consume_by_person, amount_residents, amount_consumed_family
 
+def mount_second_line(keys_list,city_dict):
+    keys_list.sort()
+    previous_key = -1
+    output_str = ''
+    for key in keys_list:
+        if previous_key != key:
+            key_str = str(key)
+            info_house_dict = city_dict[key_str]
+            output_str += f"{info_house_dict['K_AMOUNT_RESIDENTS']}-{key_str} "  # Build string
+        previous_key = key
 
-def sort_average_consume(list_keys, original_average_consume_dict):
-    sorted_dict = dict()  # Create new dict what will contain sorted average consume dict
-    for consume_key in list_keys:
-        consume_key_str = str(consume_key)  # Create a key string from the integer key
-        sorted_dict[consume_key_str] = original_average_consume_dict[consume_key_str]
-    return sorted_dict  # Returns ordered city dict
-
-
-def update_total_amount_person(consumption_dict, house_consumption_dict):
-    actual_amount_persons = int(consumption_dict["K_AMOUNT_RESIDENTS"])
-    amount_person_in_house = int(house_consumption_dict["K_AMOUNT_RESIDENTS"])
-    return actual_amount_persons + amount_person_in_house
-
-
-def update_real_consumption(average_consumption_dict, house_consumption_dict):
-    actual_consumption = int(average_consumption_dict["K_AMOUNT_CONSUME_FAMILY"])
-    house_consumption = int(house_consumption_dict["K_AMOUNT_CONSUME_FAMILY"])
-    return actual_consumption + house_consumption
-
-def insert_new_key(list_keys, key):
-    position = bisect.bisect_left(list_keys, key) # Encontrar a posição onde o elemento deve ser inserido
-    list_keys.insert(position, key) # Inserir o elemento na posição correta
-    return list_keys
+    output_str = output_str[:-1]
+    return output_str
 
 def run_challenge():
-    number_city = 0  # Initialize id city
-    state_city_lst = []  # Initialize state city list
+    info_city_str = ''
+    exist_at_least_one_city = False
+    id_city = 0 # Initialize id city
     while True:  # Setting an endless loop
         amount_house = int(input())  # Get amount of use case
         if amount_house < 0:  # Check if amount of use case is less then zero
@@ -136,28 +76,43 @@ def run_challenge():
         if amount_house == 0:  # Check if amount of use case is equal to zero
             break  # Stop the collect use case
 
-        integer_keys_list = []
+        id_city += 1
+        output_first_line = f'Cidade# {id_city}:'  # Build first line info about the specify city
+
+        total_persons = 0
+        total_amount_consume = 0
+
+        keys_list = [0] * amount_house
+        kex_list_index = 0
         city_dict = dict()  # Create city dict
         for home_index in range(amount_house):  # For each home
-            average_consume_by_person, info_house_dict = collect_info_house()  # Collect info associate by house
+            average_consume_by_person, amount_residents, amount_consumed_family  = collect_info_house()  # Collect info associate by house
             city_key = f'{average_consume_by_person}'  # Build the key for each city based on average consumption per person
-            if city_key in city_dict.keys():  # Check if exist a consume_key in average_consume_dict dict
-                consumption_dict = city_dict[city_key][0]
-                consumption_dict['K_AMOUNT_RESIDENTS'] = update_total_amount_person(consumption_dict, info_house_dict)  # Store info about house in common consume key
-                consumption_dict['K_AMOUNT_CONSUME_FAMILY'] = update_real_consumption(consumption_dict, info_house_dict)  # Store info about house in common consume key
+            if city_key in city_dict:  # Check if exist a consume_key in average_consume_dict dict
+                consumption_dict = city_dict[city_key]
+                consumption_dict['K_AMOUNT_RESIDENTS'] = consumption_dict["K_AMOUNT_RESIDENTS"] + amount_residents  # Store info about house in common consume key
             else:  # Don't exist consume key in average consume dict
-                city_dict[city_key] = []
-                city_dict[city_key].append(info_house_dict)  # Store info about house in new consume key
-                integer_keys_list = insert_new_key(integer_keys_list,average_consume_by_person)
+                city_dict[city_key] = {
+                    'K_AMOUNT_RESIDENTS': amount_residents
+                }
 
-        #sorted_city_dict = sort_average_consume(integer_keys_list, city_dict)
-        number_city += 1  # Update id city
-        info_city_str = show_info_city(number_city, city_dict, integer_keys_list)  # Builds output string based in all average consume provided by user
-        state_city_lst.append(info_city_str)  # Store output string in state city list
+            keys_list[kex_list_index] = average_consume_by_person
+            kex_list_index += 1
 
-    if len(state_city_lst) > 0:  # Check if exist at least one city
-        output_str = '\n'.join(state_city_lst)  # Insert '\n' between two cities
-        print(output_str, end='')  # Show the output for user
+            total_persons += amount_residents
+            total_amount_consume += amount_consumed_family
+
+        output_second_line = mount_second_line(keys_list,city_dict)
+        average_consume_by_city = total_amount_consume / total_persons  # Get average consume by city
+        average_consume_by_city = round_down(average_consume_by_city, 2)
+        output_third_line = f'Consumo medio: {average_consume_by_city:.02f} m3.'  # Build third line for show for user
+
+        info_city_str += output_first_line + '\n' + output_second_line + '\n' + output_third_line  # Return all info about specify city
+        info_city_str += '\n'
+        exist_at_least_one_city = True
+
+    if exist_at_least_one_city:  # Check if exist at least one city
+        print(info_city_str[:-1], end='')  # Show the output for user
 
 
 if __name__ == '__main__':
