@@ -23,97 +23,133 @@
 #
 import math
 
+class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+        self.height = 1  # Inicializando a altura do nó
+
+def height(node):
+    if not node:
+        return 0
+    return node.height
+
+def get_balance(node):
+    if not node:
+        return 0
+    return height(node.left) - height(node.right)
+
+def right_rotate(y):
+    x = y.left
+    T2 = x.right
+    x.right = y
+    y.left = T2
+    y.height = max(height(y.left), height(y.right)) + 1
+    x.height = max(height(x.left), height(x.right)) + 1
+    return x
+
+def left_rotate(x):
+    y = x.right
+    T2 = y.left
+    y.left = x
+    x.right = T2
+    x.height = max(height(x.left), height(x.right)) + 1
+    y.height = max(height(y.left), height(y.right)) + 1
+    return y
+
+class AVLTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, node, key):
+        if not node:
+            return Node(key)
+        if key < node.key:
+            node.left = self.insert(node.left, key)
+        else:
+            node.right = self.insert(node.right, key)
+        node.height = max(height(node.left), height(node.right)) + 1
+        balance = get_balance(node)
+        if balance > 1 and key < node.left.key:
+            return right_rotate(node)
+        if balance < -1 and key > node.right.key:
+            return left_rotate(node)
+        if balance > 1 and key > node.left.key:
+            node.left = left_rotate(node.left)
+            return right_rotate(node)
+        if balance < -1 and key < node.right.key:
+            node.right = right_rotate(node.right)
+            return left_rotate(node)
+        return node
+
+    def insert_key(self, key):
+        self.root = self.insert(self.root, key)
+
+    def inorder(self, root, func_by_key):
+        if not root:
+            return
+        self.inorder(root.left,func_by_key)
+        func_by_key(root.key)
+        self.inorder(root.right,func_by_key)
 
 def round_down(number, decimal_places):
     factor = 10 ** decimal_places
     return math.floor(number * factor) / factor
 
-
 def collect_info_house():
-
-    amount_residents_and_consume_by_family = input()  # Get amount of residents within the family
-    if amount_residents_and_consume_by_family == '':  # Check if amount is equal an empty string
-        raise ValueError('Provide a valid amount residents and amount of consume')  # Raise an exception
-
-    amount_tokens = amount_residents_and_consume_by_family.split()  # Get amount residents and amount consume by house
-    if len(amount_tokens) != 2:  # Check if amount of tokens is equal to 2
-        raise ValueError('Provide ONE valid amount residents AND ONE amount of consume')  # Raise an exception
-
+    amount_residents_and_consume_by_family = input()
+    amount_tokens = amount_residents_and_consume_by_family.split()
     amount_residents, amount_consumed_family = list(map(int,amount_tokens))
-
-    if amount_residents <= 0:  # Check if amount of residents is less than or equal to zero
-        raise ValueError('Number of residents cannot be equal to or less than zero')  # Raise an exception
-
-    if amount_consumed_family <= 0:  # Check if amount consumed by family is less than or equal to zero
-        raise ValueError('Amount consumed by family cannot be equal to or less than zero')  # Raise an exception
-
-    average_consume_by_person = amount_consumed_family // amount_residents  # Get average consume by person
+    average_consume_by_person = amount_consumed_family // amount_residents
     return average_consume_by_person, amount_residents, amount_consumed_family
 
-def mount_second_line(keys_list,city_dict):
-    keys_list.sort()
-    previous_key = -1
-    output_str = ''
-    for key in keys_list:
-        if previous_key != key:
-            key_str = str(key)
-            info_house_dict = city_dict[key_str]
-            output_str += f"{info_house_dict['K_AMOUNT_RESIDENTS']}-{key_str} "  # Build string
-        previous_key = key
-
-    output_str = output_str[:-1]
-    return output_str
+def mount_second_line(average_consume_avl):
+    def func_by_key(consumption_value):
+        average_consumption = consumption_value // 1000
+        residents = consumption_value % 1000
+        if func_by_key.previous_consumption == -1:
+            func_by_key.previous_consumption = average_consumption
+        if func_by_key.previous_consumption != average_consumption:
+            func_by_key.output_str += f"{func_by_key.total_residents}-{func_by_key.previous_consumption} "
+            func_by_key.total_residents = residents
+            func_by_key.previous_consumption = average_consumption
+        else:
+            func_by_key.total_residents += residents
+    func_by_key.output_str = ''
+    func_by_key.total_residents = 0
+    func_by_key.previous_consumption = -1
+    average_consume_avl.inorder(average_consume_avl.root, func_by_key)
+    func_by_key.output_str += f"{func_by_key.total_residents}-{func_by_key.previous_consumption}"
+    return func_by_key.output_str
 
 def run_challenge():
     info_city_str = ''
     exist_at_least_one_city = False
-    id_city = 0 # Initialize id city
-    while True:  # Setting an endless loop
-        amount_house = int(input())  # Get amount of use case
-        if amount_house < 0:  # Check if amount of use case is less then zero
-            raise ValueError('Use case quantity cannot be is less then zero')  # Raise an exception
-
-        if amount_house == 0:  # Check if amount of use case is equal to zero
-            break  # Stop the collect use case
-
+    id_city = 0
+    while True:
+        amount_house = int(input())
+        if amount_house == 0:
+            break
         id_city += 1
-        output_first_line = f'Cidade# {id_city}:'  # Build first line info about the specify city
-
+        output_first_line = f'Cidade# {id_city}:'
         total_persons = 0
         total_amount_consume = 0
-
-        keys_list = [0] * amount_house
-        kex_list_index = 0
-        city_dict = dict()  # Create city dict
+        avl = AVLTree()
         for home_index in range(amount_house):  # For each home
-            average_consume_by_person, amount_residents, amount_consumed_family  = collect_info_house()  # Collect info associate by house
-            city_key = f'{average_consume_by_person}'  # Build the key for each city based on average consumption per person
-            if city_key in city_dict:  # Check if exist a consume_key in average_consume_dict dict
-                consumption_dict = city_dict[city_key]
-                consumption_dict['K_AMOUNT_RESIDENTS'] = consumption_dict["K_AMOUNT_RESIDENTS"] + amount_residents  # Store info about house in common consume key
-            else:  # Don't exist consume key in average consume dict
-                city_dict[city_key] = {
-                    'K_AMOUNT_RESIDENTS': amount_residents
-                }
-
-            keys_list[kex_list_index] = average_consume_by_person
-            kex_list_index += 1
-
+            average_consume_by_person, amount_residents, amount_consumed_family  = collect_info_house()
+            avl.insert_key(average_consume_by_person * 1000 + amount_residents)
             total_persons += amount_residents
             total_amount_consume += amount_consumed_family
-
-        output_second_line = mount_second_line(keys_list,city_dict)
-        average_consume_by_city = total_amount_consume / total_persons  # Get average consume by city
+        output_second_line = mount_second_line(avl)
+        average_consume_by_city = total_amount_consume / total_persons
         average_consume_by_city = round_down(average_consume_by_city, 2)
-        output_third_line = f'Consumo medio: {average_consume_by_city:.02f} m3.'  # Build third line for show for user
-
-        info_city_str += output_first_line + '\n' + output_second_line + '\n' + output_third_line  # Return all info about specify city
+        output_third_line = f'Consumo medio: {average_consume_by_city:.02f} m3.'
+        info_city_str += output_first_line + '\n' + output_second_line + '\n' + output_third_line
         info_city_str += '\n'
         exist_at_least_one_city = True
-
-    if exist_at_least_one_city:  # Check if exist at least one city
-        print(info_city_str[:-1], end='')  # Show the output for user
-
+    if exist_at_least_one_city:
+        print(info_city_str[:-1], end='')
 
 if __name__ == '__main__':
     run_challenge()

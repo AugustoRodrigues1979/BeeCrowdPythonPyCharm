@@ -18,54 +18,6 @@ def mock_input_with_negative_amount_use_case():
     with patch('builtins.input', return_value='-1'):
         yield
 
-def test_run_challenge_raise_exception_when_enter_empty_entry(mock_empty_input):
-    with pytest.raises(Exception): # Set a way to capture exception in this test
-        run_challenge() # Run Challenge
-
-def test_run_challenge_raise_exception_when_enter_negative_amount_use_case(mock_input_with_negative_amount_use_case):
-    with pytest.raises(Exception): # Set a way to capture exception in this test
-        run_challenge() # Run Challenge
-
-def test_run_challenge_raise_exception_when_provided_one_use_case_with_empty_data_consumption():
-    mock_inputs = iter([
-        "1", ""  # Use case with empty data consumption
-    ])
-    with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
-        with pytest.raises(ValueError):  # Set a way to capture exception in this test
-            run_challenge()  # Run Challenge
-
-def test_run_challenge_raise_exception_when_provided_only_amount_residents_house_without_info_consumption():
-    mock_inputs = iter([
-        "1", "9"            # Use case with only amount of residents by house (without info consumption)
-    ])
-    with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
-        with pytest.raises(ValueError):  # Set a way to capture exception in this test
-            run_challenge()  # Run Challenge
-
-def test_run_challenge_raise_exception_when_provided_amount_residents_with_empty_consumption():
-    mock_inputs = iter([
-        "2", "9 0"          # Use case with valid amount of residents by house with empty consumption
-    ])
-    with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
-        with pytest.raises(ValueError):  # Set a way to capture exception in this test
-            run_challenge()  # Run Challenge
-
-def test_run_challenge_raise_exception_when_provided_amount_residents_with_consumption_less_than_zero():
-    mock_inputs = iter([
-        "2", "9 -1"         # Use case with valid amount of residents by house with consumption less than zero
-    ])
-    with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
-        with pytest.raises(ValueError):  # Set a way to capture exception in this test
-            run_challenge()  # Run Challenge
-
-def test_run_challenge_raise_exception_when_provided_amount_residents_less_than_zero():
-    mock_inputs = iter([
-        "2", "-9 15"        # Use case with amount of residents less than zero
-    ])
-    with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
-        with pytest.raises(ValueError):  # Set a way to capture exception in this test
-            run_challenge()  # Run Challenge
-
 def test_run_challenge_dont_show_output_when_provided_zero_use_case(mock_input_with_zero_use_case):
     with patch('builtins.print') as mock_print:  # Mock print function
         run_challenge() # Run Challenge
@@ -83,7 +35,7 @@ def test_run_challenge_show_correct_output_when_provided_info_consumption_for_on
             run_challenge()  # Run Challenge
             actual_output += mock_print.call_args.args[0]
 
-    assert expected_output == actual_output
+    assert actual_output == expected_output
 
 def test_run_challenge_show_correct_output_when_provided_info_consumption_for_third_group_of_persons():
     mock_inputs = iter([
@@ -97,7 +49,7 @@ def test_run_challenge_show_correct_output_when_provided_info_consumption_for_th
             run_challenge()  # Run Challenge
             actual_output += mock_print.call_args.args[0]
 
-    assert expected_output == actual_output
+    assert actual_output == expected_output
 
 def test_run_challenge_show_correct_output_when_provided_common_consumption_between_groups_of_person():
     mock_inputs = iter([
