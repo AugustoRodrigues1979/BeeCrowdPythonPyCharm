@@ -23,76 +23,6 @@
 #
 import math
 
-class Node:
-    def __init__(self, key):
-        self.key = key
-        self.left = None
-        self.right = None
-        self.height = 1  # Inicializando a altura do nó
-
-def height(node):
-    if not node:
-        return 0
-    return node.height
-
-def get_balance(node):
-    if not node:
-        return 0
-    return height(node.left) - height(node.right)
-
-def right_rotate(y):
-    x = y.left
-    T2 = x.right
-    x.right = y
-    y.left = T2
-    y.height = max(height(y.left), height(y.right)) + 1
-    x.height = max(height(x.left), height(x.right)) + 1
-    return x
-
-def left_rotate(x):
-    y = x.right
-    T2 = y.left
-    y.left = x
-    x.right = T2
-    x.height = max(height(x.left), height(x.right)) + 1
-    y.height = max(height(y.left), height(y.right)) + 1
-    return y
-
-class AVLTree:
-    def __init__(self):
-        self.root = None
-
-    def insert(self, node, key):
-        if not node:
-            return Node(key)
-        if key < node.key:
-            node.left = self.insert(node.left, key)
-        else:
-            node.right = self.insert(node.right, key)
-        node.height = max(height(node.left), height(node.right)) + 1
-        balance = get_balance(node)
-        if balance > 1 and key < node.left.key:
-            return right_rotate(node)
-        if balance < -1 and key > node.right.key:
-            return left_rotate(node)
-        if balance > 1 and key > node.left.key:
-            node.left = left_rotate(node.left)
-            return right_rotate(node)
-        if balance < -1 and key < node.right.key:
-            node.right = right_rotate(node.right)
-            return left_rotate(node)
-        return node
-
-    def insert_key(self, key):
-        self.root = self.insert(self.root, key)
-
-    def inorder(self, root, func_by_key):
-        if not root:
-            return
-        self.inorder(root.left,func_by_key)
-        func_by_key(root.key)
-        self.inorder(root.right,func_by_key)
-
 def round_down(number, decimal_places):
     factor = 10 ** decimal_places
     return math.floor(number * factor) / factor
@@ -104,24 +34,24 @@ def collect_info_house():
     average_consume_by_person = amount_consumed_family // amount_residents
     return average_consume_by_person, amount_residents, amount_consumed_family
 
-def mount_second_line(average_consume_avl):
-    def func_by_key(consumption_value):
+def mount_second_line(average_consume_lst):
+    average_consume_lst.sort()
+    output_str = ''
+    total_residents = 0
+    previous_consumption = -1
+    for consumption_value in average_consume_lst:
         average_consumption = consumption_value // 1000
         residents = consumption_value % 1000
-        if func_by_key.previous_consumption == -1:
-            func_by_key.previous_consumption = average_consumption
-        if func_by_key.previous_consumption != average_consumption:
-            func_by_key.output_str += f"{func_by_key.total_residents}-{func_by_key.previous_consumption} "
-            func_by_key.total_residents = residents
-            func_by_key.previous_consumption = average_consumption
+        if previous_consumption == -1:
+            previous_consumption = average_consumption
+        if previous_consumption != average_consumption:
+            output_str += f"{total_residents}-{previous_consumption} "
+            total_residents = residents
+            previous_consumption = average_consumption
         else:
-            func_by_key.total_residents += residents
-    func_by_key.output_str = ''
-    func_by_key.total_residents = 0
-    func_by_key.previous_consumption = -1
-    average_consume_avl.inorder(average_consume_avl.root, func_by_key)
-    func_by_key.output_str += f"{func_by_key.total_residents}-{func_by_key.previous_consumption}"
-    return func_by_key.output_str
+            total_residents += residents
+    output_str += f"{total_residents}-{previous_consumption}"
+    return output_str
 
 def run_challenge():
     info_city_str = ''
@@ -135,13 +65,13 @@ def run_challenge():
         output_first_line = f'Cidade# {id_city}:'
         total_persons = 0
         total_amount_consume = 0
-        avl = AVLTree()
+        consumption_list = []
         for home_index in range(amount_house):  # For each home
             average_consume_by_person, amount_residents, amount_consumed_family  = collect_info_house()
-            avl.insert_key(average_consume_by_person * 1000 + amount_residents)
+            consumption_list.append(average_consume_by_person * 1000 + amount_residents)
             total_persons += amount_residents
             total_amount_consume += amount_consumed_family
-        output_second_line = mount_second_line(avl)
+        output_second_line = mount_second_line(consumption_list)
         average_consume_by_city = total_amount_consume / total_persons
         average_consume_by_city = round_down(average_consume_by_city, 2)
         output_third_line = f'Consumo medio: {average_consume_by_city:.02f} m3.'
