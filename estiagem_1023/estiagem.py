@@ -53,33 +53,89 @@ def mount_second_line(average_consume_lst):
     output_str += f"{total_residents}-{previous_consumption}"
     return output_str
 
-def run_challenge():
-    info_city_str = ''
-    exist_at_least_one_city = False
-    id_city = 0
+def collect_info_from_only_home():
+    total_persons = 0
+    total_amount_consume = 0
+    consumption_list = []
+    amount_house = int(input())
+    if amount_house != 0:
+        for home_index in range(amount_house):
+            average_consume_by_person, amount_residents, amount_consumed_family = collect_info_house()
+            consumption_list.append(average_consume_by_person * 1000 + amount_residents)
+            total_persons += amount_residents
+            total_amount_consume += amount_consumed_family
+        consumption_list.sort()
+    return consumption_list,total_persons,total_amount_consume
+
+def collect_info_from_all_home():
+    cities_dict = dict()
+    amount_cities = 0
     while True:
+        result_list = collect_info_from_only_home()
+        if not result_list[0]:
+            break
+        amount_cities += 1
+        cities_dict['K_CITY_'+str(amount_cities)] = result_list
+    return amount_cities,cities_dict
+
+def mount_all_second_line(cities_dict):
+    output_second_line = ''
+    for city_dict in cities_dict:
+        consumption_list = city_dict[0]
+        output_second_line += mount_second_line(consumption_list[0])
+
+
+def run_challenge():
+    amount_cities,cities_dict = collect_info_from_all_home()
+    if amount_cities == 0:
+        return
+
+
+
+
+    for id_city in range(amount_cities):
+        output_first_line = f'Cidade# {id_city}:'
+        info_city_str += output_first_line + '\n' + output_second_line + '\n' + output_third_line
+        pass
+
+
+    info_city_str = ''
+
+    id_city = 0
+    id_city += 1
+
+
+    cities_dict = dict()
+    amount_cities = 0
+    while True:
+        result_list = collect_info_from_only_home()
+        if not result_list[0]:
+            break
+        amount_cities += 1
+        cities_dict['K_CITY_'+str(amount_cities)] = result_list
+
+
+
         amount_house = int(input())
         if amount_house == 0:
             break
-        id_city += 1
-        output_first_line = f'Cidade# {id_city}:'
         total_persons = 0
         total_amount_consume = 0
         consumption_list = []
         for home_index in range(amount_house):  # For each home
-            average_consume_by_person, amount_residents, amount_consumed_family  = collect_info_house()
+            average_consume_by_person, amount_residents, amount_consumed_family = collect_info_house()
             consumption_list.append(average_consume_by_person * 1000 + amount_residents)
             total_persons += amount_residents
             total_amount_consume += amount_consumed_family
-        output_second_line = mount_second_line(consumption_list)
-        average_consume_by_city = total_amount_consume / total_persons
-        average_consume_by_city = round_down(average_consume_by_city, 2)
-        output_third_line = f'Consumo medio: {average_consume_by_city:.02f} m3.'
-        info_city_str += output_first_line + '\n' + output_second_line + '\n' + output_third_line
-        info_city_str += '\n'
-        exist_at_least_one_city = True
-    if exist_at_least_one_city:
-        print(info_city_str[:-1], end='')
+        amount_cities += 1
+
+    output_second_line = mount_second_line(consumption_list)
+    average_consume_by_city = total_amount_consume / total_persons
+    average_consume_by_city = round_down(average_consume_by_city, 2)
+    output_third_line = f'Consumo medio: {average_consume_by_city:.02f} m3.'
+    info_city_str += output_first_line + '\n' + output_second_line + '\n' + output_third_line
+    info_city_str += '\n'
+    print(info_city_str[:-1], end='')
 
 if __name__ == '__main__':
     run_challenge()
