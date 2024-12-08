@@ -102,8 +102,6 @@ def mount_second_line(root, average_consumption_city):
 
     treatment_by_consumption.output_str = ''
     get_list_inorder(root, treatment_by_consumption)
-    list_a = [4,5,6,7,22,1,-3,4]
-    list_a.sort()
     return treatment_by_consumption.output_str
 
 def collect_data_city():
