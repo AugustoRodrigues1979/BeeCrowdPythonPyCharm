@@ -29,6 +29,39 @@ IDX_AVERAGE_CONSUMPTION_HOUSE = 2
 IDX_AMOUNT_RESIDENTS = 3
 
 
+def counting_sort(arr, exp):
+    """
+    Perform Counting Sort on arr[] based on the digit represented by exp (exp is 10^i, where i is the current place value).
+    """
+    n = len(arr)
+    count = {i: 0 for i in range(10)}  # Hash table (dictionary) to count occurrences of digits (0-9)
+    output = [0] * n  # Output array
+
+    for num in arr:  # Counting occurrences of digits at the current place value
+        index = (num // exp) % 10  # Get the digit at the current place value
+        count[index] += 1
+
+    for i in range(1, 10):  # Update count to store the position of each digit in the output array
+        count[i] += count[i - 1]
+
+    for num in reversed(arr):  # Build the output array by placing the elements in sorted order based on the current digit
+        index = (num // exp) % 10
+        output[count[index] - 1] = num
+        count[index] -= 1
+
+    for i in range(n):  # Copy the output array back to arr[], so that arr[] contains sorted numbers
+        arr[i] = output[i]
+
+
+def radix_sort(arr, max_num):
+    """
+    Perform Radix Sort on the array using Counting Sort as the subroutine.
+    """
+    exp = 1  # Start with the least significant digit (10^0)
+    while max_num // exp > 0: # Perform counting sort for every digit
+        counting_sort(arr, exp)
+        exp *= 10
+
 def round_down(number, decimal_places):
     factor = 10 ** decimal_places
     return math.floor(number * factor) / factor
@@ -51,6 +84,7 @@ def split_info_city(data_number_city):
 
 
 def collect_data_city():
+    max_index_value = -1
     amount_cities = 0
     cities_list = []
     while True:
@@ -65,7 +99,9 @@ def collect_data_city():
             all_info_in_only_number += amount_consumed_family * (10 ** 3)
             all_info_in_only_number += amount_residents * (10 ** 0)
             cities_list.append(all_info_in_only_number)
-    return amount_cities, cities_list
+            if max_index_value < all_info_in_only_number:
+                max_index_value = all_info_in_only_number
+    return amount_cities, cities_list, max_index_value
 
 
 def mount_output_by_city(output_second_line, average_consumption_by_city, id_city):
@@ -132,10 +168,10 @@ def mount_output_str(cities_list):
 
 
 def run_challenge():
-    amount_cities, cities_list = collect_data_city()
+    amount_cities, cities_list, max_value = collect_data_city()
     if amount_cities == 0:
         return
-    cities_list.sort()
+    radix_sort(cities_list, max_value)
     output = mount_output_str(cities_list)
     print(output, end='')
 
