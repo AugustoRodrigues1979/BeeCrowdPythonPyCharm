@@ -23,132 +23,122 @@
 #
 import math
 
-def callback_for_item_default(result, value):
-    result.append(value)
+IDX_ID_CITY = 0
+IDX_AVERAGE_CONSUMPTION_BY_PERSON = 1
+IDX_AVERAGE_CONSUMPTION_HOUSE = 2
+IDX_AMOUNT_RESIDENTS = 3
 
-def create_node(value):
-    return {'value': value, 'left': None, 'right': None}
-
-def insert(root, value):
-    new_node = create_node(value)
-    if root is None:
-        return new_node
-    current = root
-    while True:
-        if value < current['value']:
-            if current['left'] is None:
-                current['left'] = new_node
-                return root
-            current = current['left']
-        else:
-            if current['right'] is None:
-                current['right'] = new_node
-                return root
-            current = current['right']
-
-def balance_tree(root):
-    callback = callback_for_item_default
-    inorder_values = inorder(root,callback)
-    return sorted_array_to_bst(inorder_values)
-
-def inorder(root, callback_for_item):
-    stack = []
-    result = []
-    current = root
-    while current is not None or stack:
-        while current is not None:
-            stack.append(current)
-            current = current['left']
-        current = stack.pop()
-        callback_for_item(result, current['value'])
-        current = current['right']
-    return result
-
-def sorted_array_to_bst(arr):
-    if not arr:
-        return None
-    def insert_level_order(arr, root, i, n):
-        if i < n:
-            node = create_node(arr[i])
-            root = node
-            root['left'] = insert_level_order(arr, root['left'], 2 * i + 1, n)
-            root['right'] = insert_level_order(arr, root['right'], 2 * i + 2, n)
-        return root
-    return insert_level_order(arr, None, 0, len(arr))
-
-def get_list_inorder(root, callback_for_item=callback_for_item_default):
-    return inorder(root, callback_for_item)
 
 def round_down(number, decimal_places):
     factor = 10 ** decimal_places
     return math.floor(number * factor) / factor
 
+
 def collect_info_house():
-    amount_residents_and_consume_by_family = input()
-    amount_tokens = amount_residents_and_consume_by_family.split()
-    amount_residents, amount_consumed_family = list(map(int,amount_tokens))
+    amount_residents, amount_consumed_family = list(map(int, input().split()))
     average_consume_by_person = amount_consumed_family // amount_residents
     return average_consume_by_person, amount_residents, amount_consumed_family
 
-def mount_second_line(root, average_consumption_city):
-    def treatment_by_consumption(consumption_array, key_consumption):
-        key_consumption = key_consumption // 1000
-        key_consumption_str = str(key_consumption)
-        if key_consumption_str in average_consumption_city:
-            amount_residents = average_consumption_city.pop(key_consumption_str)
-            treatment_by_consumption.output_str += f"{amount_residents}-{key_consumption_str}"
-            if len(average_consumption_city) > 0:
-                treatment_by_consumption.output_str += " "
 
-    treatment_by_consumption.output_str = ''
-    get_list_inorder(root, treatment_by_consumption)
-    return treatment_by_consumption.output_str
+def split_info_city(data_number_city):
+    data_city_lst = []
+    expoent_number = 9
+    while expoent_number >= 0:
+        data_city_lst.append(data_number_city // (10 ** expoent_number))
+        data_number_city = data_number_city % (10 ** expoent_number)
+        expoent_number -= 3
+    return data_city_lst
+
 
 def collect_data_city():
     amount_cities = 0
-    cities_dict = dict()
+    cities_list = []
     while True:
         amount_house = int(input())
         if amount_house == 0:
             break
         amount_cities += 1
-        total_persons = 0
-        total_amount_consume = 0
-        root = None
-        average_consumption_by_house = dict()
         for home_index in range(amount_house):  # For each home
-            average_consume_by_person, amount_residents, amount_consumed_family  = collect_info_house()
-            root = insert(root, average_consume_by_person * 1000 + amount_residents)
-            total_persons += amount_residents
-            total_amount_consume += amount_consumed_family
-            key_average_consumption = str(average_consume_by_person)
-            if key_average_consumption in average_consumption_by_house:
-                average_consumption_by_house[key_average_consumption] += amount_residents
-            else:
-                average_consumption_by_house[key_average_consumption] = amount_residents
+            average_consume_by_person, amount_residents, amount_consumed_family = collect_info_house()
+            all_info_in_only_number = amount_cities * (10 ** 9)
+            all_info_in_only_number += average_consume_by_person * (10 ** 6)
+            all_info_in_only_number += amount_consumed_family * (10 ** 3)
+            all_info_in_only_number += amount_residents * (10 ** 0)
+            cities_list.append(all_info_in_only_number)
+    return amount_cities, cities_list
 
-        cities_dict[f'K_CITY_'+str(amount_cities)] = [root, total_persons, total_amount_consume, average_consumption_by_house]
-    return amount_cities, cities_dict
+
+def mount_output_by_city(output_second_line, average_consumption_by_city, id_city):
+    output_first_line = f'Cidade# {id_city}:'
+    output_third_line = f'Consumo medio: {average_consumption_by_city:.02f} m3.'
+    return output_first_line + '\n' + output_second_line + '\n' + output_third_line
+
+
+def mount_output_str(cities_list):
+    last_id_city = -1
+    last_average_consumption_by_house = -1
+    total_residents_by_city = 0
+    total_consumption_by_city = 0
+    output_second_line = ''
+    final_output_str = ''
+    total_residents_with_same_average_consumption = 0
+    amount_cities_processed = 1
+    for info_number_city in cities_list:
+        info_city_list = split_info_city(info_number_city)
+        id_city = info_city_list[IDX_ID_CITY]
+        average_consumption_person = info_city_list[IDX_AVERAGE_CONSUMPTION_BY_PERSON]
+        amount_consumption_family = info_city_list[IDX_AVERAGE_CONSUMPTION_HOUSE]
+        amount_residents = info_city_list[IDX_AMOUNT_RESIDENTS]
+
+        if last_id_city == -1:
+            last_id_city = id_city
+            last_average_consumption_by_house = average_consumption_person
+
+        change_city = (last_id_city != id_city)
+        change_consumption_by_house = (last_average_consumption_by_house != average_consumption_person)
+
+        if change_city:
+            amount_cities_processed += 1
+
+            output_second_line += f"{total_residents_with_same_average_consumption}-{last_average_consumption_by_house}"
+            average_consumption_by_city = round_down(total_consumption_by_city / total_residents_by_city, 2)
+            final_output_str += mount_output_by_city(output_second_line, average_consumption_by_city, last_id_city)
+            if amount_cities_processed < len(cities_list):
+                final_output_str += '\n'
+
+            last_average_consumption_by_house = average_consumption_person
+            total_residents_with_same_average_consumption = amount_residents
+
+            last_id_city = id_city
+            total_residents_by_city = amount_residents
+            total_consumption_by_city = amount_consumption_family
+
+            output_second_line = ''
+        else:
+            total_residents_by_city += amount_residents
+            total_consumption_by_city += amount_consumption_family
+
+            if change_consumption_by_house:
+                output_second_line += f"{total_residents_with_same_average_consumption}-{last_average_consumption_by_house} "
+                last_average_consumption_by_house = average_consumption_person
+                total_residents_with_same_average_consumption = amount_residents
+            else:
+                total_residents_with_same_average_consumption += amount_residents
+
+    output_second_line += f"{total_residents_with_same_average_consumption}-{last_average_consumption_by_house}"
+    average_consumption_by_city = round_down(total_consumption_by_city / total_residents_by_city, 2)
+    final_output_str += mount_output_by_city(output_second_line, average_consumption_by_city, last_id_city)
+    return final_output_str
+
 
 def run_challenge():
-    info_city_str = ''
-    amount_cities, cities_dict = collect_data_city()
+    amount_cities, cities_list = collect_data_city()
     if amount_cities == 0:
         return
-    id_city = 0
-    for key_city in cities_dict:
-        info_city_lst = cities_dict[key_city]
-        output_first_line = f'Cidade# {id_city+1}:'
-        output_second_line = mount_second_line(info_city_lst[0], info_city_lst[3])
-        average_consume_by_city = info_city_lst[2] / info_city_lst[1]
-        average_consume_by_city = round_down(average_consume_by_city, 2)
-        output_third_line = f'Consumo medio: {average_consume_by_city:.02f} m3.'
-        info_city_str += output_first_line + '\n' + output_second_line + '\n' + output_third_line
-        if id_city < amount_cities - 1:
-            info_city_str += '\n'
-        id_city += 1
+    cities_list.sort()
+    output = mount_output_str(cities_list)
+    print(output, end='')
 
-    print(info_city_str, end='')
 
 if __name__ == '__main__':
     run_challenge()
