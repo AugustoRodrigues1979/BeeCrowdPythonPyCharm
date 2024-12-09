@@ -22,159 +22,122 @@
 # No fim da saída não deve haver uma linha em branco.
 #
 import math
+from sys import stdin
 
-IDX_ID_CITY = 0
-IDX_AVERAGE_CONSUMPTION_BY_PERSON = 1
-IDX_AVERAGE_CONSUMPTION_HOUSE = 2
-IDX_AMOUNT_RESIDENTS = 3
+def get_info_each_house(house_list):
+    output_str = ''
+    for house_index in range(len(house_list)):
+        house_dict = house_list[house_index]
+        output_str += f"{house_dict['K_AMOUNT_RESIDENTS']}-{house_dict['K_AMOUNT_CONSUME_PERSON']} "  # Build string
 
-
-def counting_sort(arr, exp):
-    """
-    Perform Counting Sort on arr[] based on the digit represented by exp (exp is 10^i, where i is the current place value).
-    """
-    n = len(arr)
-    count = {i: 0 for i in range(10)}  # Hash table (dictionary) to count occurrences of digits (0-9)
-    output = [0] * n  # Output array
-
-    for num in arr:  # Counting occurrences of digits at the current place value
-        index = (num // exp) % 10  # Get the digit at the current place value
-        count[index] += 1
-
-    for i in range(1, 10):  # Update count to store the position of each digit in the output array
-        count[i] += count[i - 1]
-
-    for num in reversed(arr):  # Build the output array by placing the elements in sorted order based on the current digit
-        index = (num // exp) % 10
-        output[count[index] - 1] = num
-        count[index] -= 1
-
-    for i in range(n):  # Copy the output array back to arr[], so that arr[] contains sorted numbers
-        arr[i] = output[i]
+    return output_str
 
 
-def radix_sort(arr, max_num):
-    """
-    Perform Radix Sort on the array using Counting Sort as the subroutine.
-    """
-    exp = 1  # Start with the least significant digit (10^0)
-    while max_num // exp > 0: # Perform counting sort for every digit
-        counting_sort(arr, exp)
-        exp *= 10
+def get_all_amount_person(house_list):
+    total_persons = 0
+    for house_index in range(len(house_list)):
+        house_dict = house_list[house_index]
+        total_persons += int(house_dict['K_AMOUNT_RESIDENTS'])
+
+    return total_persons
+
+
+def get_all_amount_consume(house_list):
+    total_amount_consume = 0
+    for house_index in range(len(house_list)):
+        house_dict = house_list[house_index]
+        total_amount_consume += int(house_dict['K_AMOUNT_CONSUME_FAMILY'])
+
+    return total_amount_consume
+
 
 def round_down(number, decimal_places):
     factor = 10 ** decimal_places
     return math.floor(number * factor) / factor
 
 
+def show_info_city(id_city, city_dict):
+    output_first_line = f'Cidade# {id_city}:'  # Build first line info about the specify city
+    amount_person_by_city = 0  # Initialize amount of person for zero
+    amount_consume_by_city = 0  # Initialize amount of person for zero
+
+    output_second_line = ''  # Initialize second line info about the specify city
+    for consume_key in city_dict:  # For each consume key in city dict
+        house_list = city_dict[consume_key]
+        output_second_line += get_info_each_house(house_list)
+        amount_person_by_city += get_all_amount_person(house_list)
+        amount_consume_by_city += get_all_amount_consume(house_list)
+
+    output_second_line = output_second_line.rstrip(' ')
+    average_consume_by_city = amount_consume_by_city / amount_person_by_city  # Get average consume by city
+    average_consume_by_city = round_down(average_consume_by_city, 2)
+    output_third_line = f'Consumo medio: {average_consume_by_city:.02f} m3.'  # Build third line for show for user
+    return output_first_line + '\n' + output_second_line + '\n' + output_third_line  # Return all info about specify city
+
+
 def collect_info_house():
-    amount_residents, amount_consumed_family = list(map(int, input().split()))
-    average_consume_by_person = amount_consumed_family // amount_residents
-    return average_consume_by_person, amount_residents, amount_consumed_family
+    amount_residents_and_consume_by_family = input()  # Get amount of residents within the family
+    amount_tokens = amount_residents_and_consume_by_family.split()  # Get amount residents and amount consume by house
+    amount_residents, amount_consumed_family = [int(amount) for amount in amount_tokens]  # Convert each amount string in integer amount
+    average_consume_by_person = amount_consumed_family // amount_residents  # Get average consume by person
+    info_house_dict = {
+        'K_AMOUNT_RESIDENTS': amount_residents,
+        'K_AMOUNT_CONSUME_FAMILY': amount_consumed_family,
+        'K_AMOUNT_CONSUME_PERSON': average_consume_by_person
+    }  # Create a dict with info about all residents in specify house
+    return average_consume_by_person, info_house_dict  # Return average consume by person and info about a house
 
 
-def split_info_city(data_number_city):
-    data_city_lst = []
-    expoent_number = 9
-    while expoent_number >= 0:
-        data_city_lst.append(data_number_city // (10 ** expoent_number))
-        data_number_city = data_number_city % (10 ** expoent_number)
-        expoent_number -= 3
-    return data_city_lst
+def sort_average_consume(original_average_consume_dict):
+    sorted_dict = dict()  # Create new dict what will contain sorted average consume dict
+    for consume_key in sorted(map(int, original_average_consume_dict.keys())):  # For each key in sorted keys list
+        consume_key_str = str(consume_key)  # Create a key string from the integer key
+        sorted_dict[consume_key_str] = original_average_consume_dict[consume_key_str]
+    return sorted_dict  # Returns ordered city dict
 
 
-def collect_data_city():
-    max_index_value = -1
-    amount_cities = 0
-    cities_list = []
-    while True:
-        amount_house = int(input())
-        if amount_house == 0:
-            break
-        amount_cities += 1
-        for home_index in range(amount_house):  # For each home
-            average_consume_by_person, amount_residents, amount_consumed_family = collect_info_house()
-            all_info_in_only_number = amount_cities * (10 ** 9)
-            all_info_in_only_number += average_consume_by_person * (10 ** 6)
-            all_info_in_only_number += amount_consumed_family * (10 ** 3)
-            all_info_in_only_number += amount_residents * (10 ** 0)
-            cities_list.append(all_info_in_only_number)
-            if max_index_value < all_info_in_only_number:
-                max_index_value = all_info_in_only_number
-    return amount_cities, cities_list, max_index_value
+def update_total_amount_person(consumption_dict, house_consumption_dict):
+    actual_amount_persons = int(consumption_dict["K_AMOUNT_RESIDENTS"])
+    amount_person_in_house = int(house_consumption_dict["K_AMOUNT_RESIDENTS"])
+    return actual_amount_persons + amount_person_in_house
 
 
-def mount_output_by_city(output_second_line, average_consumption_by_city, id_city):
-    output_first_line = f'Cidade# {id_city}:'
-    output_third_line = f'Consumo medio: {average_consumption_by_city:.02f} m3.'
-    return output_first_line + '\n' + output_second_line + '\n' + output_third_line
-
-
-def mount_output_str(cities_list):
-    last_id_city = -1
-    last_average_consumption_by_house = -1
-    total_residents_by_city = 0
-    total_consumption_by_city = 0
-    output_second_line = ''
-    final_output_str = ''
-    total_residents_with_same_average_consumption = 0
-    amount_cities_processed = 1
-    for info_number_city in cities_list:
-        info_city_list = split_info_city(info_number_city)
-        id_city = info_city_list[IDX_ID_CITY]
-        average_consumption_person = info_city_list[IDX_AVERAGE_CONSUMPTION_BY_PERSON]
-        amount_consumption_family = info_city_list[IDX_AVERAGE_CONSUMPTION_HOUSE]
-        amount_residents = info_city_list[IDX_AMOUNT_RESIDENTS]
-
-        if last_id_city == -1:
-            last_id_city = id_city
-            last_average_consumption_by_house = average_consumption_person
-
-        change_city = (last_id_city != id_city)
-        change_consumption_by_house = (last_average_consumption_by_house != average_consumption_person)
-
-        if change_city:
-            amount_cities_processed += 1
-
-            output_second_line += f"{total_residents_with_same_average_consumption}-{last_average_consumption_by_house}"
-            average_consumption_by_city = round_down(total_consumption_by_city / total_residents_by_city, 2)
-            final_output_str += mount_output_by_city(output_second_line, average_consumption_by_city, last_id_city)
-            if amount_cities_processed < len(cities_list):
-                final_output_str += '\n\n'
-
-            last_average_consumption_by_house = average_consumption_person
-            total_residents_with_same_average_consumption = amount_residents
-
-            last_id_city = id_city
-            total_residents_by_city = amount_residents
-            total_consumption_by_city = amount_consumption_family
-
-            output_second_line = ''
-        else:
-            total_residents_by_city += amount_residents
-            total_consumption_by_city += amount_consumption_family
-
-            if change_consumption_by_house:
-                output_second_line += f"{total_residents_with_same_average_consumption}-{last_average_consumption_by_house} "
-                last_average_consumption_by_house = average_consumption_person
-                total_residents_with_same_average_consumption = amount_residents
-            else:
-                total_residents_with_same_average_consumption += amount_residents
-
-    output_second_line += f"{total_residents_with_same_average_consumption}-{last_average_consumption_by_house}"
-    average_consumption_by_city = round_down(total_consumption_by_city / total_residents_by_city, 2)
-    final_output_str += mount_output_by_city(output_second_line, average_consumption_by_city, last_id_city)
-    return final_output_str
+def update_real_consumption(average_consumption_dict, house_consumption_dict):
+    actual_consumption = int(average_consumption_dict["K_AMOUNT_CONSUME_FAMILY"])
+    house_consumption = int(house_consumption_dict["K_AMOUNT_CONSUME_FAMILY"])
+    return actual_consumption + house_consumption
 
 
 def run_challenge():
-    amount_cities, cities_list, max_value = collect_data_city()
-    if amount_cities == 0:
-        return
-    radix_sort(cities_list, max_value)
-    output = mount_output_str(cities_list)
-    print(output, end='')
+    number_city = 0  # Initialize id city
+    state_city_lst = []  # Initialize state city list
+    while True:  # Setting an endless loop
+        amount_house = int(input())  # Get amount of use case
+        if amount_house == 0:  # Check if amount of use case is equal to zero
+            break  # Stop the collect use case
+
+        city_dict = dict()  # Create city dict
+        for home_index in range(amount_house):  # For each home
+            average_consume_by_person, info_house_dict = collect_info_house()  # Collect info associate by house
+            city_key = f'{average_consume_by_person}'  # Build the key for each city based on average consumption per person
+            if city_key in city_dict.keys():  # Check if exist a consume_key in average_consume_dict dict
+                consumption_dict = city_dict[city_key][0]
+                consumption_dict['K_AMOUNT_RESIDENTS'] = update_total_amount_person(consumption_dict, info_house_dict)  # Store info about house in common consume key
+                consumption_dict['K_AMOUNT_CONSUME_FAMILY'] = update_real_consumption(consumption_dict, info_house_dict)  # Store info about house in common consume key
+            else:  # Don't exist consume key in average consume dict
+                city_dict[city_key] = []
+                city_dict[city_key].append(info_house_dict)  # Store info about house in new consume key
+
+        sorted_city_dict = sort_average_consume(city_dict)
+        number_city += 1  # Update id city
+        info_city_str = show_info_city(number_city, sorted_city_dict)  # Builds output string based in all average consume provided by user
+        state_city_lst.append(info_city_str)  # Store output string in state city list
+
+    if len(state_city_lst) > 0:  # Check if exist at least one city
+        output_str = '\n\n'.join(state_city_lst)  # Insert '\n' between two cities
+        print(output_str, end='')  # Show the output for user
 
 
 if __name__ == '__main__':
+    input = stdin.readline
     run_challenge()

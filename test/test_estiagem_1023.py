@@ -1,7 +1,5 @@
-import random
-
 import pytest
-from estiagem_1023.estiagem import run_challenge, radix_sort
+from estiagem_1023.estiagem import run_challenge
 from unittest.mock import patch
 
 input_invalid_expression_math = ['1 / 2 * 3 - 4', ' abcd ']
@@ -111,11 +109,3 @@ def test_run_challenge_show_correct_output_when_provided_example_from_judge_beec
             actual_output += mock_print.call_args.args[0]
 
     assert actual_output == expected_output
-
-def test_radix_sort_with_large_info_city_list_provided_by_collect_data_city():
-    info_city_lst = [random.randint(0, 10 ** 12 - 1) for _ in range(10 ** 3)]
-    max_value = max(info_city_lst)
-    radix_sort(info_city_lst, max_value)
-    is_list_ordered = check_ordered_list(info_city_lst)
-    assert is_list_ordered
-
