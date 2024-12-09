@@ -24,31 +24,17 @@
 import math
 from sys import stdin
 
-def get_info_each_house(house_list):
-    output_str = ''
-    for house_index in range(len(house_list)):
-        house_dict = house_list[house_index]
-        output_str += f"{house_dict['K_AMOUNT_RESIDENTS']}-{house_dict['K_AMOUNT_CONSUME_PERSON']} "  # Build string
 
-    return output_str
+def get_info_each_house(house_dict):
+    return f"{house_dict['K_AMOUNT_RESIDENTS']}-{house_dict['K_AMOUNT_CONSUME_PERSON']}"  # Build string
 
 
-def get_all_amount_person(house_list):
-    total_persons = 0
-    for house_index in range(len(house_list)):
-        house_dict = house_list[house_index]
-        total_persons += int(house_dict['K_AMOUNT_RESIDENTS'])
-
-    return total_persons
+def get_all_amount_person(house_dict):
+    return int(house_dict['K_AMOUNT_RESIDENTS'])
 
 
-def get_all_amount_consume(house_list):
-    total_amount_consume = 0
-    for house_index in range(len(house_list)):
-        house_dict = house_list[house_index]
-        total_amount_consume += int(house_dict['K_AMOUNT_CONSUME_FAMILY'])
-
-    return total_amount_consume
+def get_all_amount_consume(house_dict):
+    return int(house_dict['K_AMOUNT_CONSUME_FAMILY'])
 
 
 def round_down(number, decimal_places):
@@ -56,18 +42,8 @@ def round_down(number, decimal_places):
     return math.floor(number * factor) / factor
 
 
-def show_info_city(id_city, city_dict):
+def show_info_city(id_city, output_second_line, amount_person_by_city, amount_consume_by_city):
     output_first_line = f'Cidade# {id_city}:'  # Build first line info about the specify city
-    amount_person_by_city = 0  # Initialize amount of person for zero
-    amount_consume_by_city = 0  # Initialize amount of person for zero
-
-    output_second_line = ''  # Initialize second line info about the specify city
-    for consume_key in city_dict:  # For each consume key in city dict
-        house_list = city_dict[consume_key]
-        output_second_line += get_info_each_house(house_list)
-        amount_person_by_city += get_all_amount_person(house_list)
-        amount_consume_by_city += get_all_amount_consume(house_list)
-
     output_second_line = output_second_line.rstrip(' ')
     average_consume_by_city = amount_consume_by_city / amount_person_by_city  # Get average consume by city
     average_consume_by_city = round_down(average_consume_by_city, 2)
@@ -88,12 +64,18 @@ def collect_info_house():
     return average_consume_by_person, info_house_dict  # Return average consume by person and info about a house
 
 
-def sort_average_consume(original_average_consume_dict):
-    sorted_dict = dict()  # Create new dict what will contain sorted average consume dict
-    for consume_key in sorted(map(int, original_average_consume_dict.keys())):  # For each key in sorted keys list
-        consume_key_str = str(consume_key)  # Create a key string from the integer key
-        sorted_dict[consume_key_str] = original_average_consume_dict[consume_key_str]
-    return sorted_dict  # Returns ordered city dict
+def mount_second_line(consumption_dict):
+    output_second_line = ''  # Set a second line with empty string
+    processed_keys = 0
+    amount_keys = len(consumption_dict)
+    for key in sorted(map(int, consumption_dict.keys())):  # For each key in sorted keys list
+        key_str = str(key)  # Create a key string from the integer key
+        output_second_line += get_info_each_house(consumption_dict[key_str][0])
+        if processed_keys != amount_keys - 1:
+            output_second_line += ' '
+        processed_keys += 1
+
+    return output_second_line  # Returns ordered city dict
 
 
 def update_total_amount_person(consumption_dict, house_consumption_dict):
@@ -110,15 +92,18 @@ def update_real_consumption(average_consumption_dict, house_consumption_dict):
 
 def run_challenge():
     number_city = 0  # Initialize id city
-    state_city_lst = []  # Initialize state city list
     while True:  # Setting an endless loop
         amount_house = int(input())  # Get amount of use case
         if amount_house == 0:  # Check if amount of use case is equal to zero
             break  # Stop the collect use case
 
+        amount_person_by_city = 0  # Initialize amount of person for zero
+        amount_consume_by_city = 0  # Initialize amount of person for zero
         city_dict = dict()  # Create city dict
         for home_index in range(amount_house):  # For each home
             average_consume_by_person, info_house_dict = collect_info_house()  # Collect info associate by house
+            amount_person_by_city += get_all_amount_person(info_house_dict)
+            amount_consume_by_city += get_all_amount_consume(info_house_dict)
             city_key = f'{average_consume_by_person}'  # Build the key for each city based on average consumption per person
             if city_key in city_dict.keys():  # Check if exist a consume_key in average_consume_dict dict
                 consumption_dict = city_dict[city_key][0]
@@ -128,14 +113,12 @@ def run_challenge():
                 city_dict[city_key] = []
                 city_dict[city_key].append(info_house_dict)  # Store info about house in new consume key
 
-        sorted_city_dict = sort_average_consume(city_dict)
+        output_second_line = mount_second_line(city_dict)
         number_city += 1  # Update id city
-        info_city_str = show_info_city(number_city, sorted_city_dict)  # Builds output string based in all average consume provided by user
-        state_city_lst.append(info_city_str)  # Store output string in state city list
-
-    if len(state_city_lst) > 0:  # Check if exist at least one city
-        output_str = '\n\n'.join(state_city_lst)  # Insert '\n' between two cities
-        print(output_str, end='')  # Show the output for user
+        info_city_str = show_info_city(number_city, output_second_line, amount_person_by_city, amount_consume_by_city)  # Builds output string based in all average consume provided by user
+        if number_city > 1:
+            info_city_str = '\n\n' + info_city_str
+        print(info_city_str, end='')  # Show the output for user
 
 
 if __name__ == '__main__':

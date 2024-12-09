@@ -4,6 +4,11 @@ from unittest.mock import patch
 
 input_invalid_expression_math = ['1 / 2 * 3 - 4', ' abcd ']
 
+def join_all_results(mock_print):
+    result = ''
+    for i in range(len(mock_print.call_args_list)):
+        result += mock_print.call_args_list[i][0][0]
+    return result
 
 @pytest.fixture
 def mock_empty_input():
@@ -106,6 +111,6 @@ def test_run_challenge_show_correct_output_when_provided_example_from_judge_beec
     with patch('builtins.print') as mock_print:  # Mock print function
         with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
             run_challenge()  # Run Challenge
-            actual_output += mock_print.call_args.args[0]
+            actual_output = join_all_results(mock_print)
 
     assert actual_output == expected_output
