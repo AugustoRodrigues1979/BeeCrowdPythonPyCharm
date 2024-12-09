@@ -100,8 +100,8 @@ def test_run_challenge_show_correct_output_when_provided_example_from_judge_beec
     ])
 
     expected_output = ''
-    expected_output += "Cidade# 1:\n2-5 3-7 3-13\nConsumo medio: 9.00 m3.\n"
-    expected_output += "Cidade# 2:\n5-10 6-11 2-20 1-25\nConsumo medio: 13.28 m3.\n"
+    expected_output += "Cidade# 1:\n2-5 3-7 3-13\nConsumo medio: 9.00 m3.\n\n"
+    expected_output += "Cidade# 2:\n5-10 6-11 2-20 1-25\nConsumo medio: 13.28 m3.\n\n"
     expected_output += "Cidade# 3:\n3-0 1-1\nConsumo medio: 0.75 m3."
 
     actual_output = ''

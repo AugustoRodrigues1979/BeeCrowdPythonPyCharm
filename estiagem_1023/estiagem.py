@@ -140,7 +140,7 @@ def mount_output_str(cities_list):
             average_consumption_by_city = round_down(total_consumption_by_city / total_residents_by_city, 2)
             final_output_str += mount_output_by_city(output_second_line, average_consumption_by_city, last_id_city)
             if amount_cities_processed < len(cities_list):
-                final_output_str += '\n'
+                final_output_str += '\n\n'
 
             last_average_consumption_by_house = average_consumption_person
             total_residents_with_same_average_consumption = amount_residents
