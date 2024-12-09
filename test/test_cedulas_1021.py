@@ -292,15 +292,15 @@ class TestCedulas:
             actual_value = round(actual_value + 0.01, 2)  # Set next value amount
         print('')
 
-    def test_split_float_number_into_integer_parts_with_random_float_number(self):
+    def test_split_float_number_into_integer_parts(self):
         begin_interval = 0
         end_interval = 1000000
         expected_integer_part_number = random.randrange(begin_interval, end_interval)
         expected_decimal_part_number = random.randrange(0, 99)
         float_number = float(f'{expected_integer_part_number}.{expected_decimal_part_number}')
         obtained_integer_part_number, obtained_decimal_part_number = split_float_number_into_integer_parts(float_number)
-        assert (expected_integer_part_number, obtained_integer_part_number)
-        assert (expected_decimal_part_number, obtained_decimal_part_number)
-        assert (type(expected_decimal_part_number), type(obtained_decimal_part_number))
-        assert (type(expected_decimal_part_number), type(obtained_decimal_part_number))
-        assert (float_number, float(f'{obtained_integer_part_number}.{obtained_decimal_part_number}'))
+        assert expected_integer_part_number == obtained_integer_part_number
+        assert expected_decimal_part_number == obtained_decimal_part_number
+        assert type(expected_decimal_part_number) == type(obtained_decimal_part_number)
+        assert type(expected_decimal_part_number) == type(obtained_decimal_part_number)
+        assert float_number == float(f'{obtained_integer_part_number}.{obtained_decimal_part_number}')
