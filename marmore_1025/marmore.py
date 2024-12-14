@@ -1,4 +1,4 @@
-from sys import stdin
+from sys import stdin, stdout
 
 
 def run_challenge():
@@ -11,18 +11,21 @@ def run_challenge():
         if amount_marble == 0 and amount_queries == 0:
             break
 
-        marble_dict = dict()
-
-        marble_pos = 2
+        list_numbers = [-1]
         for i in range(amount_marble):
-            marble_key = input()
+            list_numbers.append(int(input()))
+
+        list_numbers.sort()
+
+        marble_dict = dict()
+        for i in range(len(list_numbers)):
+            marble_key = str(list_numbers[i])
             if not marble_key in marble_dict.keys():
-                marble_dict[marble_key] = marble_pos
-            marble_pos += 1
+                marble_dict[marble_key] = i
 
         query_result_dict = dict()
         for i in range(amount_queries):
-            query_number = input()
+            query_number = str(int(input()))
             if query_number in marble_dict:
                 query_result_dict[query_number] = f'{int(query_number)} found at {marble_dict[query_number]}'
             else:
@@ -33,14 +36,15 @@ def run_challenge():
 
     id_serie_use_case = 1
     for key_result in result_dict.keys():
-        print(f'CASE# {id_serie_use_case}:', end='\n')
+        print(f'CASE# {id_serie_use_case}:\n')
         id_serie_use_case += 1
         query_result_dict = result_dict[key_result]
         for query_key in query_result_dict:
             result_str = query_result_dict[query_key]
-            print(f'{result_str}', end='\n')
+            print(f'{result_str}\n')
 
 
 if __name__ == '__main__':
     input = stdin.readline
+    print = stdout.write
     run_challenge()

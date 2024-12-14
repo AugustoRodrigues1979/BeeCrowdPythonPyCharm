@@ -3,7 +3,7 @@ import time
 import unittest
 from unittest.mock import patch
 
-from marmore_1025.marmore import run_challenge
+from marmore_1025.marmore_andre_bezerra import run_challenge
 
 def read_input_file(filename_str):
     with open(filename_str, 'r') as file:
