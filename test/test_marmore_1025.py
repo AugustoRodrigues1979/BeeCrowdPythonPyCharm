@@ -5,11 +5,13 @@ from unittest.mock import patch
 
 from marmore_1025.marmore import run_challenge
 
+
 def read_input_file(filename_str):
     with open(filename_str, 'r') as file:
-        file_content = file.read() # Read all contents, including '\n', and store them in a single string
+        file_content = file.read()  # Read all contents, including '\n', and store them in a single string
 
     return file_content
+
 
 def ensure_first_occurrence_of_number(number, numbers_list):
     sorted_numbers_list = sorted(numbers_list)
@@ -116,7 +118,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(expected_output, actual_output)
 
     def test_challenge_return_result_provided_by_daniel_pdf_from_beecrowde(self):
-        input_lst = ['5 1','1','2','3','4','5','3','10 2','1','1','2','2','3','3','5','5','4','4','4','5','0 0']
+        input_lst = ['5 1', '1', '2', '3', '4', '5', '3', '10 2', '1', '1', '2', '2', '3', '3', '5', '5', '4', '4', '4', '5', '0 0']
         mock_inputs = iter(input_lst)
         expected_output = 'CASE# 1:\n3 found at 3\nCASE# 2:\n4 found at 7\n5 found at 9\n'
         expected_calls = 5
@@ -143,7 +145,66 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(expected_calls, actual_calls)
         self.assertEqual(expected_output, actual_output)
 
+    def test_challenge_return_result_provided_by_luiz_barcelos_from_beecrowde_2(self):
+        input_lst = read_input_file('marmore_luiz_barcelos_input_02.txt')
+        mock_inputs = iter(input_lst.split('\n'))
 
+        expected_output = read_input_file('marmore_luiz_barcelos_output_02.txt')
+        expected_calls = expected_output.count('\n')
+
+        with patch('builtins.print') as mock_print:  # Mock print function
+            with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
+                run_challenge()  # Run Challenge
+                actual_calls = mock_print.call_count
+                actual_output = join_all_results(mock_print)
+        self.assertEqual(expected_calls, actual_calls)
+        self.assertEqual(expected_output, actual_output)
+
+    def test_challenge_return_result_provided_by_luiz_barcelos_from_beecrowde_3(self):
+        input_lst = read_input_file('marmore_luiz_barcelos_input_03.txt')
+        mock_inputs = iter(input_lst.split('\n'))
+
+        expected_output = read_input_file('marmore_luiz_barcelos_output_03.txt')
+        expected_calls = expected_output.count('\n')
+
+        with patch('builtins.print') as mock_print:  # Mock print function
+            with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
+                run_challenge()  # Run Challenge
+                actual_calls = mock_print.call_count
+                actual_output = join_all_results(mock_print)
+        self.assertEqual(expected_calls, actual_calls)
+        self.assertEqual(expected_output, actual_output)
+
+
+    def test_challenge_return_result_provided_by_monir004_from_beecrowde(self):
+        input_lst = read_input_file('marmore_monir004_input_01.txt')
+        mock_inputs = iter(input_lst.split('\n'))
+
+        expected_output = read_input_file('marmore_monir004_output_01.txt')
+        expected_calls = expected_output.count('\n')
+
+        with patch('builtins.print') as mock_print:  # Mock print function
+            with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
+                run_challenge()  # Run Challenge
+                actual_calls = mock_print.call_count
+                actual_output = join_all_results(mock_print)
+        self.assertEqual(expected_calls, actual_calls)
+        self.assertEqual(expected_output, actual_output)
+
+    def test_challenge_return_result_provided_by_monir004_from_beecrowde(self):
+        input_lst = read_input_file('marmore_monir004_input_01.txt')
+        mock_inputs = iter(input_lst.split('\n'))
+
+        expected_output = read_input_file('marmore_monir004_output_01.txt')
+        expected_calls = expected_output.count('\n')
+
+        with patch('builtins.print') as mock_print:  # Mock print function
+            with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
+                run_challenge()  # Run Challenge
+                actual_calls = mock_print.call_count
+                actual_output = join_all_results(mock_print)
+        self.assertEqual(expected_calls, actual_calls)
+        self.assertEqual(expected_output, actual_output)
 
     def test_challenge_when_provided_random_list_numbers_without_specify_number_in_list(self):
         properties = {
