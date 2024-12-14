@@ -1,0 +1,1216 @@
+CASE# 1:
+180 not found
+170 found at 147
+38 not found
+167 found at 144
+108 found at 77
+98 not found
+184 found at 157
+131 found at 103
+34 found at 23
+186 found at 158
+53 not found
+176 not found
+43 found at 30
+32 found at 20
+55 found at 35
+42 not found
+1 not found
+54 not found
+CASE# 2:
+51 found at 46
+176 not found
+48 found at 43
+130 found at 108
+179 found at 149
+157 found at 127
+193 found at 163
+103 not found
+7 not found
+155 not found
+135 not found
+146 found at 117
+127 not found
+149 not found
+29 found at 27
+35 not found
+184 found at 154
+170 not found
+CASE# 3:
+163 not found
+101 not found
+184 found at 153
+172 found at 145
+20 found at 16
+37 found at 35
+135 not found
+70 not found
+118 found at 103
+107 found at 95
+126 found at 109
+67 found at 59
+170 not found
+163 not found
+70 not found
+161 found at 136
+98 found at 84
+67 found at 59
+CASE# 4:
+2 not found
+59 found at 58
+175 found at 152
+159 found at 138
+164 not found
+44 found at 40
+119 not found
+34 found at 28
+139 not found
+29 not found
+172 not found
+169 found at 146
+131 found at 116
+199 not found
+43 not found
+38 found at 36
+111 not found
+141 not found
+CASE# 5:
+112 not found
+145 not found
+30 not found
+105 found at 87
+11 found at 14
+190 not found
+126 not found
+135 not found
+35 found at 31
+42 not found
+65 found at 54
+114 not found
+2 found at 1
+157 found at 126
+151 found at 121
+64 found at 53
+126 not found
+118 not found
+CASE# 6:
+191 not found
+10 found at 5
+53 found at 32
+12 found at 8
+90 found at 70
+178 found at 146
+159 not found
+107 not found
+140 found at 116
+160 found at 135
+76 not found
+27 found at 21
+61 found at 41
+115 not found
+86 not found
+4 found at 1
+84 found at 66
+18 not found
+CASE# 7:
+119 found at 92
+63 not found
+150 found at 123
+136 not found
+94 found at 73
+59 found at 50
+45 found at 41
+135 found at 113
+165 found at 137
+40 found at 34
+71 found at 62
+3 found at 5
+150 found at 123
+16 found at 14
+107 not found
+12 not found
+113 found at 88
+30 found at 26
+CASE# 8:
+87 not found
+107 found at 94
+74 not found
+14 found at 10
+110 not found
+136 found at 119
+149 not found
+11 not found
+108 found at 95
+26 found at 28
+79 found at 78
+80 found at 79
+171 not found
+64 found at 58
+163 found at 142
+87 not found
+62 not found
+101 found at 89
+CASE# 9:
+151 found at 118
+172 found at 139
+19 not found
+74 not found
+101 found at 77
+73 found at 55
+38 not found
+181 found at 152
+26 not found
+117 found at 91
+91 not found
+7 not found
+108 found at 81
+133 found at 102
+125 not found
+51 not found
+57 found at 35
+1 found at 1
+CASE# 10:
+56 found at 46
+165 found at 143
+7 not found
+80 not found
+132 not found
+144 not found
+173 not found
+41 found at 32
+51 found at 41
+185 found at 160
+128 not found
+94 found at 83
+65 found at 53
+5 not found
+150 found at 126
+48 not found
+78 found at 68
+112 found at 89
+CASE# 11:
+189 found at 159
+134 not found
+63 found at 60
+66 found at 63
+153 found at 128
+71 not found
+175 found at 146
+68 found at 66
+40 not found
+54 found at 55
+97 found at 95
+31 found at 34
+144 not found
+8 not found
+152 not found
+70 found at 68
+163 found at 134
+165 not found
+CASE# 12:
+64 found at 56
+76 not found
+115 found at 96
+11 not found
+42 not found
+9 found at 9
+126 found at 107
+31 found at 28
+197 found at 165
+183 not found
+187 found at 154
+12 not found
+56 found at 48
+166 not found
+40 found at 35
+64 found at 56
+84 found at 72
+56 found at 48
+CASE# 13:
+78 found at 52
+40 found at 25
+151 not found
+49 not found
+38 not found
+195 found at 161
+66 found at 43
+139 not found
+97 found at 69
+162 not found
+98 found at 71
+142 found at 105
+46 found at 28
+98 found at 71
+101 found at 74
+42 found at 26
+197 not found
+41 not found
+CASE# 14:
+180 found at 146
+34 not found
+184 not found
+164 found at 132
+173 not found
+56 not found
+114 not found
+134 found at 106
+37 found at 26
+112 not found
+88 not found
+10 found at 5
+8 found at 4
+187 not found
+119 not found
+160 not found
+14 not found
+44 found at 32
+CASE# 15:
+194 not found
+53 found at 29
+102 found at 86
+195 found at 163
+103 not found
+108 found at 90
+113 found at 95
+195 found at 163
+7 not found
+21 found at 9
+150 not found
+3 not found
+3 not found
+114 not found
+49 not found
+175 found at 153
+50 not found
+200 found at 169
+CASE# 16:
+193 found at 164
+12 found at 12
+114 found at 109
+185 not found
+160 not found
+45 found at 41
+33 not found
+3 found at 1
+30 found at 31
+37 found at 36
+12 found at 12
+64 found at 60
+153 not found
+60 found at 55
+26 not found
+192 found at 161
+106 not found
+157 not found
+CASE# 17:
+10 not found
+86 not found
+83 found at 73
+20 found at 16
+147 found at 132
+85 found at 76
+143 not found
+180 not found
+185 not found
+124 found at 108
+160 found at 143
+80 not found
+156 not found
+71 found at 62
+89 found at 80
+20 found at 16
+71 found at 62
+146 found at 131
+CASE# 18:
+15 not found
+18 not found
+49 found at 40
+83 found at 71
+95 found at 84
+101 found at 91
+167 not found
+145 found at 129
+6 found at 9
+54 found at 46
+95 found at 84
+135 not found
+31 found at 32
+112 not found
+146 not found
+125 found at 107
+68 found at 58
+176 found at 151
+CASE# 19:
+147 found at 128
+93 found at 76
+12 not found
+45 not found
+59 found at 48
+97 not found
+58 not found
+108 found at 89
+11 found at 10
+163 found at 140
+200 found at 168
+169 not found
+8 not found
+187 found at 157
+36 found at 28
+120 found at 107
+164 found at 142
+34 found at 26
+CASE# 20:
+157 found at 133
+169 found at 142
+5 not found
+186 found at 156
+147 not found
+133 found at 108
+10 not found
+166 found at 139
+123 found at 97
+183 found at 154
+128 found at 103
+30 not found
+156 found at 132
+120 found at 95
+192 found at 161
+34 not found
+142 found at 117
+56 found at 46
+CASE# 21:
+98 not found
+197 not found
+9 not found
+135 not found
+157 found at 140
+78 found at 82
+6 found at 6
+180 found at 154
+86 not found
+26 found at 35
+173 not found
+79 found at 83
+151 found at 134
+156 not found
+149 not found
+75 found at 76
+93 not found
+83 found at 86
+CASE# 22:
+194 found at 162
+43 not found
+15 not found
+185 found at 150
+37 found at 27
+105 not found
+123 not found
+166 found at 135
+43 not found
+175 found at 143
+194 found at 162
+171 found at 140
+182 not found
+117 found at 95
+168 not found
+121 not found
+100 not found
+111 not found
+CASE# 23:
+83 found at 67
+87 not found
+112 found at 92
+59 not found
+84 found at 68
+173 not found
+11 not found
+44 not found
+49 not found
+79 found at 63
+115 found at 95
+7 not found
+56 not found
+175 not found
+89 found at 71
+151 found at 132
+98 not found
+21 found at 20
+CASE# 24:
+196 not found
+123 found at 94
+49 found at 37
+43 not found
+177 not found
+17 found at 15
+102 not found
+57 not found
+36 not found
+159 found at 125
+16 found at 14
+161 found at 128
+123 found at 94
+83 found at 60
+37 not found
+1 not found
+129 found at 97
+168 not found
+CASE# 25:
+113 found at 95
+197 not found
+121 found at 102
+131 found at 111
+186 found at 155
+89 not found
+186 found at 155
+161 not found
+98 found at 75
+145 found at 121
+145 found at 121
+34 not found
+85 found at 62
+172 not found
+71 found at 52
+83 found at 61
+183 found at 150
+188 not found
+CASE# 26:
+95 found at 78
+121 not found
+12 found at 12
+79 not found
+108 found at 93
+74 not found
+85 not found
+65 not found
+51 found at 44
+103 not found
+21 found at 20
+85 not found
+34 found at 32
+88 not found
+155 not found
+146 not found
+18 found at 19
+116 found at 100
+CASE# 27:
+109 not found
+149 not found
+68 found at 55
+102 found at 87
+78 not found
+116 found at 96
+90 not found
+43 not found
+26 found at 28
+105 not found
+82 found at 72
+119 not found
+43 not found
+144 found at 115
+176 not found
+103 found at 90
+22 not found
+34 not found
+CASE# 28:
+48 found at 43
+37 found at 31
+41 found at 34
+169 found at 146
+15 not found
+72 not found
+62 not found
+170 not found
+174 not found
+180 found at 153
+196 found at 166
+87 not found
+112 not found
+121 found at 102
+174 not found
+106 found at 94
+98 found at 86
+199 found at 168
+CASE# 29:
+54 found at 47
+70 not found
+25 found at 23
+47 not found
+62 found at 55
+30 found at 30
+195 not found
+29 not found
+61 not found
+46 not found
+65 found at 58
+46 not found
+24 not found
+57 found at 51
+68 not found
+73 found at 66
+78 found at 70
+20 found at 16
+CASE# 30:
+163 not found
+10 not found
+148 found at 137
+112 found at 97
+187 found at 159
+196 found at 166
+23 not found
+111 found at 95
+58 not found
+125 found at 109
+54 found at 55
+153 found at 142
+5 found at 5
+116 not found
+156 not found
+63 not found
+199 not found
+77 not found
+CASE# 31:
+130 not found
+111 found at 93
+105 not found
+3 found at 4
+173 not found
+191 not found
+84 found at 68
+177 not found
+32 found at 22
+173 not found
+174 found at 144
+110 found at 92
+73 not found
+61 found at 45
+154 not found
+112 found at 94
+200 not found
+73 not found
+CASE# 32:
+168 found at 137
+77 not found
+21 found at 16
+84 not found
+181 found at 148
+176 not found
+98 found at 84
+88 not found
+74 found at 62
+80 found at 65
+12 not found
+101 found at 87
+184 found at 154
+154 found at 129
+19 not found
+67 not found
+59 not found
+193 not found
+CASE# 33:
+103 not found
+138 not found
+153 found at 130
+116 not found
+171 not found
+6 found at 5
+178 found at 152
+98 found at 82
+148 not found
+136 not found
+126 found at 109
+9 not found
+170 not found
+31 not found
+15 found at 13
+81 found at 65
+94 not found
+17 not found
+CASE# 34:
+76 not found
+5 found at 7
+59 found at 52
+100 not found
+77 found at 65
+65 not found
+96 found at 80
+88 found at 75
+171 found at 139
+165 found at 134
+122 found at 100
+108 not found
+95 not found
+11 not found
+181 not found
+182 not found
+180 found at 147
+111 found at 90
+CASE# 35:
+86 not found
+196 found at 169
+140 found at 112
+26 found at 20
+148 not found
+113 found at 94
+194 not found
+46 found at 34
+195 found at 168
+57 found at 47
+10 found at 9
+95 found at 71
+112 found at 92
+78 found at 61
+123 not found
+141 found at 114
+59 not found
+77 found at 60
+CASE# 36:
+200 not found
+141 found at 122
+198 found at 168
+9 found at 5
+119 not found
+110 not found
+167 not found
+58 not found
+180 not found
+127 found at 106
+36 found at 30
+179 found at 152
+174 not found
+96 found at 81
+142 not found
+147 not found
+49 not found
+121 found at 101
+CASE# 37:
+103 not found
+127 found at 112
+79 not found
+85 found at 76
+173 found at 149
+154 not found
+86 not found
+22 not found
+64 found at 56
+157 found at 135
+3 found at 1
+26 found at 17
+119 found at 104
+143 not found
+131 not found
+178 found at 153
+167 not found
+197 found at 167
+CASE# 38:
+44 not found
+147 found at 119
+84 found at 67
+34 not found
+43 not found
+95 not found
+57 found at 42
+79 not found
+70 found at 55
+18 found at 9
+14 not found
+176 found at 144
+10 found at 6
+90 found at 74
+153 found at 124
+133 not found
+70 found at 55
+76 not found
+CASE# 39:
+30 found at 33
+30 found at 33
+97 found at 91
+18 found at 18
+125 found at 115
+65 not found
+91 found at 90
+144 not found
+190 found at 157
+60 not found
+43 found at 44
+106 found at 99
+13 found at 12
+55 found at 58
+118 found at 112
+188 not found
+156 found at 137
+66 not found
+CASE# 40:
+127 not found
+145 found at 122
+72 found at 63
+148 found at 125
+62 not found
+134 not found
+35 not found
+145 found at 122
+165 found at 140
+122 not found
+118 found at 110
+130 not found
+134 not found
+58 not found
+10 not found
+129 found at 116
+48 found at 41
+185 found at 151
+CASE# 41:
+156 found at 140
+138 found at 126
+134 not found
+69 not found
+2 found at 3
+36 found at 42
+119 found at 105
+72 not found
+160 not found
+66 found at 71
+174 not found
+109 not found
+36 found at 42
+143 found at 129
+60 found at 63
+92 found at 95
+32 found at 38
+87 found at 90
+CASE# 42:
+189 not found
+62 not found
+133 not found
+68 found at 65
+86 not found
+97 found at 90
+36 not found
+101 found at 93
+18 found at 18
+68 found at 65
+152 found at 134
+10 found at 16
+9 found at 15
+36 not found
+113 found at 101
+144 not found
+18 found at 18
+2 found at 2
+CASE# 43:
+125 found at 106
+43 found at 37
+31 not found
+123 not found
+98 found at 90
+19 found at 22
+11 found at 13
+90 found at 86
+172 found at 144
+137 not found
+134 not found
+185 not found
+110 found at 97
+138 not found
+74 found at 67
+114 found at 100
+67 found at 62
+11 found at 13
+CASE# 44:
+2 not found
+169 not found
+24 found at 17
+165 found at 134
+133 found at 102
+180 not found
+160 found at 129
+23 found at 15
+92 not found
+141 found at 112
+46 not found
+67 not found
+29 not found
+9 not found
+157 not found
+146 not found
+144 found at 115
+112 not found
+CASE# 45:
+132 found at 106
+31 found at 23
+156 found at 129
+190 not found
+136 found at 113
+47 not found
+65 found at 56
+147 found at 119
+122 not found
+120 found at 92
+57 found at 43
+21 not found
+199 not found
+160 found at 132
+153 found at 127
+164 not found
+78 found at 65
+47 not found
+CASE# 46:
+71 found at 54
+122 found at 108
+136 found at 118
+158 found at 133
+172 found at 143
+177 found at 145
+26 not found
+187 found at 155
+107 not found
+174 not found
+94 found at 77
+130 not found
+106 found at 84
+147 not found
+154 not found
+11 not found
+18 found at 11
+150 not found
+CASE# 47:
+112 found at 101
+160 found at 139
+4 found at 3
+170 found at 145
+60 found at 51
+132 found at 120
+2 found at 1
+2 found at 1
+71 found at 60
+68 not found
+26 not found
+139 not found
+128 found at 117
+145 found at 127
+12 not found
+32 found at 23
+165 found at 143
+70 found at 59
+CASE# 48:
+192 found at 165
+113 found at 90
+71 found at 57
+122 found at 98
+159 found at 136
+44 found at 36
+127 found at 104
+24 found at 17
+2 found at 2
+102 found at 76
+57 found at 48
+194 found at 167
+158 found at 135
+65 not found
+135 found at 113
+134 found at 112
+162 found at 137
+66 found at 53
+CASE# 49:
+32 not found
+100 found at 84
+92 found at 78
+30 not found
+30 not found
+100 found at 84
+52 found at 41
+130 not found
+70 found at 56
+69 not found
+10 found at 12
+81 not found
+167 found at 138
+31 not found
+157 not found
+198 not found
+41 found at 33
+117 found at 99
+CASE# 50:
+95 found at 81
+194 found at 164
+108 found at 93
+135 not found
+106 found at 90
+116 not found
+99 found at 83
+112 not found
+38 found at 30
+36 found at 29
+143 found at 118
+196 not found
+38 found at 30
+18 not found
+117 found at 103
+56 found at 46
+24 not found
+74 not found
+CASE# 51:
+110 found at 100
+64 found at 57
+51 not found
+148 not found
+121 found at 110
+77 found at 75
+65 not found
+179 not found
+98 found at 91
+19 not found
+56 found at 49
+76 found at 74
+28 found at 20
+59 found at 52
+69 found at 65
+143 not found
+81 not found
+186 found at 162
+CASE# 52:
+87 found at 78
+136 found at 109
+127 found at 106
+78 found at 67
+136 found at 109
+152 found at 120
+70 not found
+137 not found
+60 found at 51
+7 found at 9
+158 not found
+107 found at 93
+111 not found
+195 found at 165
+37 not found
+170 found at 141
+39 found at 39
+50 not found
+CASE# 53:
+49 not found
+48 not found
+26 not found
+147 not found
+104 found at 84
+166 found at 143
+50 not found
+76 not found
+196 found at 166
+128 found at 106
+47 found at 37
+124 found at 103
+134 not found
+55 found at 42
+54 not found
+132 found at 112
+8 found at 3
+50 not found
+CASE# 54:
+50 found at 51
+21 not found
+52 not found
+187 not found
+99 not found
+87 found at 87
+122 found at 115
+186 found at 159
+76 found at 76
+147 found at 136
+79 found at 79
+77 found at 77
+134 found at 128
+38 found at 40
+6 not found
+148 not found
+82 found at 82
+179 found at 152
+CASE# 55:
+133 not found
+173 not found
+3 not found
+60 found at 51
+163 found at 146
+13 found at 13
+41 found at 38
+131 found at 114
+5 found at 6
+24 found at 23
+144 found at 127
+107 found at 91
+120 found at 104
+70 found at 58
+166 found at 150
+163 found at 146
+41 found at 38
+100 found at 86
+CASE# 56:
+7 found at 7
+111 found at 91
+76 found at 67
+73 found at 62
+82 not found
+161 found at 139
+156 not found
+198 not found
+166 found at 142
+190 not found
+169 not found
+196 not found
+37 found at 35
+169 not found
+41 not found
+116 found at 95
+41 not found
+75 found at 64
+CASE# 57:
+83 not found
+48 found at 35
+94 not found
+145 not found
+86 not found
+104 not found
+49 found at 39
+66 not found
+88 not found
+80 found at 61
+190 found at 162
+167 found at 128
+141 found at 104
+102 found at 75
+101 not found
+133 not found
+134 found at 99
+128 not found
+CASE# 58:
+162 not found
+88 found at 79
+8 not found
+144 found at 119
+151 found at 128
+153 not found
+65 found at 59
+64 not found
+141 found at 115
+18 not found
+8 not found
+88 found at 79
+55 found at 51
+22 found at 14
+200 not found
+157 found at 132
+134 found at 106
+110 not found
+CASE# 59:
+49 found at 32
+6 found at 1
+50 found at 35
+87 not found
+199 not found
+149 found at 130
+180 found at 157
+87 not found
+26 found at 12
+21 found at 7
+94 found at 76
+53 found at 37
+100 found at 81
+181 found at 159
+185 found at 161
+22 found at 8
+20 found at 4
+69 not found
+CASE# 60:
+148 not found
+139 found at 120
+158 found at 133
+121 found at 104
+195 found at 166
+32 not found
+3 found at 1
+1 not found
+69 not found
+139 found at 120
+141 not found
+139 found at 120
+124 found at 106
+193 not found
+179 found at 153
+66 found at 51
+99 not found
+168 not found
+CASE# 61:
+200 not found
+26 not found
+82 found at 61
+138 found at 116
+37 not found
+69 not found
+41 not found
+5 not found
+155 found at 129
+190 not found
+165 not found
+9 found at 3
+127 found at 108
+22 found at 9
+120 found at 102
+97 found at 75
+22 found at 9
+112 found at 89
+CASE# 62:
+111 found at 100
+45 found at 41
+186 not found
+57 found at 53
+159 not found
+17 found at 12
+82 not found
+39 found at 29
+15 found at 8
+128 found at 112
+167 not found
+33 found at 24
+8 not found
+105 not found
+136 found at 116
+182 found at 150
+79 found at 74
+36 found at 26
+CASE# 63:
+190 not found
+73 not found
+2 not found
+2 not found
+68 found at 62
+48 not found
+40 not found
+85 found at 78
+183 found at 151
+128 not found
+13 found at 19
+41 not found
+169 found at 137
+99 not found
+42 found at 35
+196 found at 162
+27 not found
+136 found at 113
+CASE# 64:
+41 not found
+20 found at 16
+38 found at 29
+103 found at 95
+109 found at 99
+181 found at 157
+191 not found
+15 found at 10
+181 found at 157
+122 found at 107
+178 found at 152
+42 found at 31
+35 found at 26
+22 found at 18
+189 found at 164
+92 found at 85
+23 found at 19
+177 found at 151
