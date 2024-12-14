@@ -1,4 +1,5 @@
 import random
+import time
 import unittest
 from unittest.mock import patch
 
@@ -6,9 +7,10 @@ from marmore_1025.marmore import run_challenge
 
 
 def ensure_first_occurrence_of_number(number, numbers_list):
+    sorted_numbers_list = sorted(numbers_list)
     index_number = 0
-    for i in range(len(numbers_list)):
-        if numbers_list[i] == number:
+    for i in range(len(sorted_numbers_list)):
+        if sorted_numbers_list[i] == number:
             index_number = i
             break
     return index_number
@@ -34,7 +36,7 @@ def remove_duplicate_numbers(numbers_list):
 
 def number_dont_with_in_lst(start_range, end_range, amount_numbers, properties):
     step_number = random.randrange(1, 30)
-    number_list = [random.randrange(start_range, end_range + 1, step_number) for _ in range(amount_numbers)]
+    number_list = [random.randrange(start_range, end_range, step_number) for _ in range(amount_numbers)]
 
     if properties['unique_numbers']:
         number_list = remove_duplicate_numbers(number_list)
@@ -72,6 +74,9 @@ def join_all_results(mock_print):
 
 
 class MyTestCase(unittest.TestCase):
+    def setUp(self):
+        random.seed(time.time())
+
     def test_challenge_returns_empty_output_when_provided_zero_cases(self):
         mock_inputs = iter(['0 0'])
         expected_calls = 0
@@ -111,7 +116,12 @@ class MyTestCase(unittest.TestCase):
             'unique_numbers': random.choice([True, False])
         }
         start_range, end_range, amount_numbers = 1, 10 ** 4, 64
-        number_not_in_list, use_case_lst, _ = number_dont_with_in_lst(start_range, end_range, amount_numbers, properties)
+        number_not_in_list, use_case_lst, _ = number_dont_with_in_lst(
+            start_range,
+            end_range + 1,
+            amount_numbers,
+            properties
+        )
         mock_inputs = iter(use_case_lst)
         expected_output = f'CASE# 1:\n{number_not_in_list} not found\n'
         expected_calls = 2
@@ -131,12 +141,12 @@ class MyTestCase(unittest.TestCase):
         start_range, end_range, amount_numbers = 1, 10 ** 4, 64
         index_number, number_in_list, use_case_lst = number_with_in_lst(
             start_range,
-            end_range,
+            end_range + 1,
             amount_numbers,
             properties
         )
         mock_inputs = iter(use_case_lst)
-        expected_output = f'CASE# 1:\n{number_in_list} found at {index_number + 2}\n'
+        expected_output = f'CASE# 1:\n{number_in_list} found at {index_number + 1}\n'
         expected_calls = 2
         with patch('builtins.print') as mock_print:  # Mock print function
             with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
@@ -147,7 +157,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(expected_output, actual_output)
 
     def test_stress_challenge_with_random_numbers_list(self):
-        amount_test = random.randrange(10**2, 10**3)
+        amount_test = random.randrange(10 ** 2, 10 ** 3)
         for i in range(amount_test):
             self.test_challenge_when_provided_random_list_numbers_without_specify_number_in_list()
             self.test_challenge_when_provided_random_list_numbers_with_specify_number_in_list()
