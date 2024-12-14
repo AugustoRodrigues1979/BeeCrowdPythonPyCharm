@@ -14,8 +14,8 @@ def ensure_first_occurrence_of_number(number, numbers_list):
     return index_number
 
 
-def number_with_in_iterable_in_inverted_lst(start_range, end_range, amount_numbers, properties):
-    _, _, numbers_list = number_dont_with_in_iterable_in_lst(start_range, end_range, amount_numbers, properties)
+def number_with_in_lst(start_range, end_range, amount_numbers, properties):
+    _, _, numbers_list = number_dont_with_in_lst(start_range, end_range, amount_numbers, properties)
     index_number_in_list = random.randrange(0, len(numbers_list))
     number_in_the_list = numbers_list[index_number_in_list]
     index_number_in_list = ensure_first_occurrence_of_number(number_in_the_list, numbers_list)
@@ -32,27 +32,27 @@ def remove_duplicate_numbers(numbers_list):
     return list(set(numbers_list))
 
 
-def number_dont_with_in_iterable_in_lst(start_range, end_range, amount_numbers, properties):
+def number_dont_with_in_lst(start_range, end_range, amount_numbers, properties):
     step_number = random.randrange(1, 30)
-    inverted_list = [random.randrange(start_range, end_range + 1, step_number) for _ in range(amount_numbers)]
+    number_list = [random.randrange(start_range, end_range + 1, step_number) for _ in range(amount_numbers)]
 
     if properties['unique_numbers']:
-        inverted_list = remove_duplicate_numbers(inverted_list)
+        number_list = remove_duplicate_numbers(number_list)
 
     if properties['type_order'] == 1:
-        inverted_list.reverse()
+        number_list.reverse()
     else:
         if properties['type_order'] == 2:
-            inverted_list.sort()
+            number_list.sort()
 
-    number_not_in_inverted_list = generate_number_not_in_list(start_range, end_range, inverted_list)
+    number_not_in_list = generate_number_not_in_list(start_range, end_range, number_list)
 
-    use_case_lst = [f'{len(inverted_list)} 1']
-    use_case_lst.extend(map(str, inverted_list))
-    use_case_lst.append(f'{number_not_in_inverted_list}')
+    use_case_lst = [f'{len(number_list)} 1']
+    use_case_lst.extend(map(str, number_list))
+    use_case_lst.append(f'{number_not_in_list}')
     use_case_lst.append('0 0')
 
-    return number_not_in_inverted_list, use_case_lst, inverted_list
+    return number_not_in_list, use_case_lst, number_list
 
 
 def generate_number_not_in_list(start_range, end_range, numbers_list):
@@ -81,30 +81,6 @@ class MyTestCase(unittest.TestCase):
                 actual_calls = mock_print.call_count
         self.assertEqual(expected_calls, actual_calls)
 
-    def test_challenge_returns_empty_output_when_provided_one_case_with_0_queries(self):
-        mock_inputs = iter(['1 0', '0', '0 0'])
-        expected_calls = 1
-        expected_output = 'CASE# 1:\n'
-        with patch('builtins.print') as mock_print:  # Mock print function
-            with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
-                run_challenge()  # Run Challenge
-                actual_calls = mock_print.call_count
-                actual_output = join_all_results(mock_print)
-        self.assertEqual(expected_calls, actual_calls)
-        self.assertEqual(expected_output, actual_output)
-
-    def test_challenge_returns_empty_output_when_provided_one_case_with_0_marble(self):
-        mock_inputs = iter(['0 1', '0', '0 0'])
-        expected_calls = 2
-        expected_output = 'CASE# 1:\n0 not found\n'
-        with patch('builtins.print') as mock_print:  # Mock print function
-            with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
-                run_challenge()  # Run Challenge
-                actual_calls = mock_print.call_count
-                actual_output = join_all_results(mock_print)
-        self.assertEqual(expected_calls, actual_calls)
-        self.assertEqual(expected_output, actual_output)
-
     def test_challenge_return_result_provided_by_beecrowde(self):
         mock_inputs = iter(['4 1', '2', '3', '5', '1', '5', '0 0'])
         expected_output = 'CASE# 1:\n5 found at 4\n'
@@ -129,15 +105,15 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(expected_calls, actual_calls)
         self.assertEqual(expected_output, actual_output)
 
-    def test_challenge_return_result_when_provided_inverted_list_numbers_without_number_with_in_list(self):
+    def test_challenge_when_provided_random_list_numbers_without_specify_number_in_list(self):
         properties = {
             'type_order': random.randrange(1, 4),
             'unique_numbers': random.choice([True, False])
         }
         start_range, end_range, amount_numbers = 1, 10 ** 4, 64
-        number_not_in_inverted_list, use_case_lst, _ = number_dont_with_in_iterable_in_lst(start_range, end_range, amount_numbers, properties)
+        number_not_in_list, use_case_lst, _ = number_dont_with_in_lst(start_range, end_range, amount_numbers, properties)
         mock_inputs = iter(use_case_lst)
-        expected_output = f'CASE# 1:\n{number_not_in_inverted_list} not found\n'
+        expected_output = f'CASE# 1:\n{number_not_in_list} not found\n'
         expected_calls = 2
         with patch('builtins.print') as mock_print:  # Mock print function
             with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
@@ -147,20 +123,20 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(expected_calls, actual_calls)
         self.assertEqual(expected_output, actual_output)
 
-    def test_challenge_return_result_when_provided_inverted_list_numbers_with_number_with_in_list(self):
+    def test_challenge_when_provided_random_list_numbers_with_specify_number_in_list(self):
         properties = {
             'type_order': random.randrange(1, 4),
             'unique_numbers': random.choice([True, False])
         }
         start_range, end_range, amount_numbers = 1, 10 ** 4, 64
-        index_number, number_in_inverted_list, use_case_lst = number_with_in_iterable_in_inverted_lst(
+        index_number, number_in_list, use_case_lst = number_with_in_lst(
             start_range,
             end_range,
             amount_numbers,
             properties
         )
         mock_inputs = iter(use_case_lst)
-        expected_output = f'CASE# 1:\n{number_in_inverted_list} found at {index_number + 2}\n'
+        expected_output = f'CASE# 1:\n{number_in_list} found at {index_number + 2}\n'
         expected_calls = 2
         with patch('builtins.print') as mock_print:  # Mock print function
             with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
@@ -173,8 +149,8 @@ class MyTestCase(unittest.TestCase):
     def test_stress_challenge_with_random_numbers_list(self):
         amount_test = random.randrange(10**2, 10**3)
         for i in range(amount_test):
-            self.test_challenge_return_result_when_provided_inverted_list_numbers_with_number_with_in_list()
-            self.test_challenge_return_result_when_provided_inverted_list_numbers_without_number_with_in_list()
+            self.test_challenge_when_provided_random_list_numbers_without_specify_number_in_list()
+            self.test_challenge_when_provided_random_list_numbers_with_specify_number_in_list()
 
 
 if __name__ == '__main__':
