@@ -75,8 +75,11 @@ def join_all_results(mock_print):
     result = ''
     for i in range(len(mock_print.call_args_list)):
         result += mock_print.call_args_list[i][0][0]
-        if 'end' in mock_print.call_args_list[i].kwargs.keys():
+        if 'end' in mock_print.call_args_list[i].kwargs:
             result += mock_print.call_args_list[i].kwargs['end']
+        else:
+            result += '\n'
+
     return result
 
 
