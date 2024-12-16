@@ -175,22 +175,6 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(expected_calls, actual_calls)
         self.assertEqual(expected_output, actual_output)
 
-
-    def test_challenge_return_result_provided_by_monir004_from_beecrowde(self):
-        input_lst = read_input_file('marmore_monir004_input_01.txt')
-        mock_inputs = iter(input_lst.split('\n'))
-
-        expected_output = read_input_file('marmore_monir004_output_01.txt')
-        expected_calls = expected_output.count('\n')
-
-        with patch('builtins.print') as mock_print:  # Mock print function
-            with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
-                run_challenge()  # Run Challenge
-                actual_calls = mock_print.call_count
-                actual_output = join_all_results(mock_print)
-        self.assertEqual(expected_calls, actual_calls)
-        self.assertEqual(expected_output, actual_output)
-
     def test_challenge_return_result_provided_by_monir004_from_beecrowde(self):
         input_lst = read_input_file('marmore_monir004_input_01.txt')
         mock_inputs = iter(input_lst.split('\n'))
