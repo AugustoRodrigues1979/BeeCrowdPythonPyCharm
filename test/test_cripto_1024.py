@@ -3,11 +3,22 @@ import unittest
 from cripto_1024.cripto import run_challenge_simple, run_challenge, apply_first_step, apply_third_step
 from unittest.mock import patch
 
+def read_input_file(filename_str):
+    with open(filename_str, 'r') as file:
+        file_content = file.read()  # Read all contents, including '\n', and store them in a single string
+
+    return file_content
 
 def join_all_results(mock_print):
     result = ''
     for i in range(len(mock_print.call_args_list)):
         result += mock_print.call_args_list[i][0][0]
+        if 'end' in mock_print.call_args_list[i].kwargs:
+            result += mock_print.call_args_list[i].kwargs['end']
+        else:
+            if i != len(mock_print.call_args_list) - 1:
+                result += '\n'
+
     return result
 
 
@@ -108,7 +119,11 @@ class MyTestCase(unittest.TestCase):
                 self.assertEqual('gi.r{hyz-xx', mock_print.call_args[0][0])
 
     def test_mock_run_challenge_generate_same_result_provided_by_beecrowd_all_line_4(self):
-        expected_output = '3# rvzgV' + '1FECedc' + 'ks. \\n{frzx' + 'gi.r{hyz-xx'
+        expected_output = '3# rvzgV' + '\n'
+        expected_output += '1FECedc' + '\n'
+        expected_output += 'ks. \\n{frzx' + '\n'
+        expected_output += 'gi.r{hyz-xx'
+
         mock_inputs = iter(["4", "Texto #3", "abcABC1", "vxpdylY .ph", "vv.xwfxo.fd"])
         with patch('builtins.print') as mock_print:  # Mock print function
             with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
@@ -150,6 +165,49 @@ class MyTestCase(unittest.TestCase):
         for i in range(end_range):
             self.test_mock_run_challenge_generate_same_result_provided_by_beecrowd_long_line_with_odd_items()
             self.test_mock_run_challenge_generate_same_result_provided_by_beecrowd_long_line_with_even_items()
+
+    def test_challenge_show_valid_result_with_monir004_input_data_01(self):
+        input_str = read_input_file('cripto_monir004_input_01.txt')
+        input_lst = input_str.split('\n')
+        mock_inputs = iter(input_lst)
+
+        expected_output = read_input_file('cripto_monir004_output_01.txt')
+        expected_calls = int(input_lst[0])
+
+        with patch('builtins.print') as mock_print:  # Mock print function
+            with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
+                mock_print.reset_mock()
+                run_challenge()  # Run Challenge
+                actual_calls = mock_print.call_count
+                actual_output = join_all_results(mock_print)
+        self.assertEqual(expected_calls, actual_calls)
+        self.assertEqual(expected_output, actual_output)
+
+    def test_challenge_show_valid_result_for_each_line_monir004_input_data_01(self):
+        input_str = read_input_file('cripto_monir004_input_01.txt')
+        output_str = read_input_file('cripto_monir004_output_01.txt')
+
+        input_lst = input_str.split('\n')
+        output_lst = output_str.split('\n')
+
+        amount_item = int(input_lst[0])
+        for index in range(1,amount_item):
+            line_str = input_lst[index]
+            mock_inputs = iter(['1', line_str])
+
+            expected_output = output_lst[index-1]
+            expected_calls = 1
+
+            with patch('builtins.print') as mock_print:  # Mock print function
+                with patch('builtins.input', lambda: next(mock_inputs)):  # Mock input function
+                    mock_print.reset_mock()
+                    run_challenge()  # Run Challenge
+                    actual_calls = mock_print.call_count
+                    actual_output = join_all_results(mock_print)
+
+            self.assertEqual(expected_calls, actual_calls)
+            self.assertEqual(expected_output, actual_output)
+
 
 
 if __name__ == '__main__':

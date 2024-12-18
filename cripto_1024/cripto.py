@@ -76,5 +76,4 @@ def run_challenge():
 
 
 if __name__ == '__main__':
-    input = stdin.readline
     run_challenge()
